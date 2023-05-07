@@ -1,0 +1,12 @@
+.pop-up__submitform {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-width: 800px){
+    .pop-up__submitform{
+        margin-left: 0;
+        margin-right: 0;
+    }
+}

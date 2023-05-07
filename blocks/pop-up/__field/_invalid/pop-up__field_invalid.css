@@ -1,0 +1,7 @@
+.pop-up__field_invalid,
+.form__item-input_invalid:focus {
+    border-top: 1px solid rgba(255, 0, 0, 1);
+    outline-color: red;
+}
+
+

@@ -1,0 +1,9 @@
+.pop-up__photo{
+    align-self: center;
+    justify-self: center;
+    max-height: 75vh;
+    max-width: 75vw;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+}

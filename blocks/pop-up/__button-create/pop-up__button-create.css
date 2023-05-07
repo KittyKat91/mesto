@@ -1,0 +1,47 @@
+.pop-up__button-create{
+    background-color: #000;
+    color: #FFFFFF;
+    max-width: 358px;
+    max-height: 50px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    align-self: center;
+    border: none;
+    padding: 14px 125px 18px 125px;
+    margin: 48px 36px 37px 36px;
+    cursor: pointer;
+}
+
+@media (max-width: 800px){
+    .pop-up__button-create{
+        max-height: 46px;
+        margin: 45px 22px 25px 22px;
+        padding: 14px 82px 14px 82px;
+    }
+}
+
+@media (max-width: 600px){
+    .pop-up__button-create{
+        max-width: 238px;
+        
+    }
+}
+
+.pop-up__button-create:hover {
+    opacity: 0.8;
+}
+
+.pop-up__button-create:disabled {
+    border: 1px solid black;
+    background-color: transparent;
+    color: black;
+    opacity: .2;
+  }
+  
+  .pop-up__button-create:not(:disabled):hover {
+    background-color: rgba(0 0 0 / 80%);
+  }

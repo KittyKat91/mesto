@@ -1,0 +1,25 @@
+.pop-up__field-error {
+    opacity: 0;
+    margin: 0;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    color: #FF0000;
+    display: block;
+    min-height: 30px;
+    padding-top: 5px;
+    max-width: 320px;
+    width: 100%;
+    margin-left: 36px;
+    
+}
+
+@media (max-width: 560px){
+    .pop-up__field-error{
+            margin: 0 22px 0 22px;
+            max-width: 230px;
+            width: 100%;
+        }
+    }

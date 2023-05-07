@@ -1,0 +1,14 @@
+
+.profile__info {
+    color: #FFFFFF;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+@media (max-width:580px) {
+    .profile__info{
+        margin-top: 0;
+    }
+}

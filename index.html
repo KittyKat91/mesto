@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="mesto - четвертый-девятые спринты на Яндекс.Практикуме">
+    <title>Mesto</title>
+    <meta name="author" content="Kити Самсонадзе">
+    <link rel="stylesheet" href="./pages/index.css">
+</head>
+    <body class="page">
+        <header class="header">
+            <img class="header__logo" src="./images/Vector.svg" alt="место_лого">
+            <div class="header__line"></div>
+        </header>
+        <main class="main">
+            <section class="profile">  
+                <div class="profile__main">        
+                    <img class="profile__avatar" src="./images/custo.svg" alt="Кусто">
+                    <div class="profile__editable">
+                        <div class="profile__info">
+                            <h1 class="profile__name">Жак-Ив Кусто</h1>
+                            <button class="button profile__edit-button" type="button"></button>               
+                        </div>
+                        <p class="profile__bio">Исследователь океана </p>  
+                    </div>   
+                </div> 
+
+                    <button class="button profile__add-button" type="button"></button>
+            </section>
+            <section class="places">
+                <ul class="places__cards">
+                </ul>
+            </section>
+                    
+        </main>
+        <footer class="footer">
+            <div class="footer__project-name">© 2022 Mesto Russia</div>
+        </footer>
+        <div class="pop-up pop-up_type_user">
+            <div class="pop-up__container">
+                <button class="button pop-up__button-close" id="pop-up__user-close" type="button" ></button>
+                <h2 class="pop-up__title">Редактировать профиль</h2>
+                <form class="pop-up__form pop-up__submitform" id="submitform" name="submitform" novalidate>
+                    <fieldset class="pop-up__form-fieldset">
+                        <input required class="pop-up__field pop-up__field-name" id="name" type="text" placeholder="Имя" minlength="2" maxlength="40">
+                        <span class="pop-up__field-error name-error"></span>
+                        <input required class="pop-up__field pop-up__field-bio" id="bio" type="text" placeholder="Профиль" minlength="2" maxlength="200">
+                        <span class="pop-up__field-error bio-error" id="pop-up__field-error"></span>
+                        <button class="button pop-up__button-submit" type="submit">Сохранить</button>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <div class="pop-up pop-up_type_place" id="pop-up__place"> 
+            <div class="pop-up__container">
+                <button class="button pop-up__button-close pop-up__container-button-close" id="pop-up__place-close" type="button" ></button> 
+                <h2 class="pop-up__title">Новое место</h2>
+                <form class="pop-up__form pop-up__form_type_addplace" id="addplace" name="addplace" novalidate> 
+                    <fieldset class="pop-up__form-fieldset">
+                        <input class="pop-up__field pop-up__field-title" id="title" required type="text" placeholder="Название" minlength="2" maxlength="40">
+                        <span class="pop-up__field-error title-error"></span>
+                        <input class="pop-up__field pop-up__field-link" id="url" required type="url" placeholder="Ссылка на картинку">
+                        <span class="pop-up__field-error url-error"></span>
+                        <button class="button pop-up__button-submit" type="submit">Создать</button>
+                    </fieldset>
+                </form>
+            </div>
+        </div> 
+        <div class="pop-up pop-up_type_image"> 
+           <div class=" pop-up__container pop-up__container_type_image">
+                <button type="button" class="button pop-up__button-close" id="pop-up__image-close"></button>
+                <img class="pop-up__photo" src="#" alt="#">
+                <h3 class="pop-up__caption"></h3>
+            </div>
+        </div>
+        <template id="place__template">
+            <li class="place">
+            <button class="place__button-delete" type="button" aria-label="delete"></button>
+            <img class="place__img" src="#" alt="#">
+            <div class="place__textbox">
+                <h2 class="place__title"></h2>
+                <button class="button place__like-button" type="button"></button>
+            </div>
+            </li>
+        </template>
+    <script src="./scripts/formValidator.js" type="module"></script>
+    <script src="./scripts/script.js" type="module"></script>
+    <script src="./scripts/card.js" type="module"></script>
+    </body>
+</html>
