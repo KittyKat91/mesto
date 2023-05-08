@@ -1,10 +1,9 @@
 import { config } from "./script.js";
 
 
-const popupAddCard = document.querySelector(".pop-up_type_place");
-const popupEditProfile = document.querySelector(".pop-up_type_user");
+const addCardForm = document.querySelector(".pop-up_type_place .pop-up__form");
+const editProfileForm = document.querySelector(".pop-up_type_user .pop-up__form");
 
-console.log(config);
 
 export class formValidator {
   constructor(config, form) {
@@ -17,29 +16,30 @@ export class formValidator {
     this.inputErrorVisible = config.inputErrorVisible;
     this.inputInvalid = config.inputInvalid;
     this.errorClass = config.errorClass;
-    this.inputList = Array.from(this.form.querySelectorAll('.pop-up__field'));
+    this.inputList = Array.from(this.form.querySelectorAll(this.fieldSelector));
     this.buttonElement = config.submitButtonSelector;
-    
+  
   }
 
 
   //Validation function - shall be connected to seteventlisteners
   enableValidation() {
-    this.inputList.addEventListener("submit", (evt) => {
+    this.form.addEventListener("submit", (evt) => {
       evt.preventDefault();
       this._setEventListener();
     });
    
-    return this.inputList;
+    return this.form;
   }
 
 
    //should be connected to input validity check function and toggle button state function
   _setEventListener() {
-    this.form.forEach((inputElement) => {
+    this.inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
         this._checkInputValidity(inputElement);
         this._toggleButtonState(this.submitButtonSelector);
+        
       });
     });
   }
@@ -48,11 +48,11 @@ export class formValidator {
 
   _toggleButtonState = () => {
     if (this._hasInvalidInput()) {
-      buttonElement.setAttribute("disabled", true);
-      buttonElement.classList.add(this.inactiveButtonClass);
+      this.buttonElement.setAttribute("disabled", true);
+      this.buttonElement.classList.add(this.inactiveButtonClass);
     } else {
-      buttonElement.removeAttribute("disabled", true);
-      buttonElement.classList.remove(this.inactiveButtonClass);
+      this.buttonElement.removeAttribute("disabled", true);
+      this.buttonElement.classList.remove(this.inactiveButtonClass);
     }
   };
 
@@ -68,20 +68,19 @@ export class formValidator {
 
   _checkInputValidity(inputElement) {
     if (!inputElement.validity.valid) {
-      this._showInputError(inputElement);
+      this._showInputError(inputElement, inputElement.errorMessage);
     } else {
       this._hideInputError(inputElement);
     }
   }
-  
+   
 
   // shows error message
 
   _showInputError(inputElement, errorMessage) {
     //looking for error input
     const errorElement = this.form.querySelector(
-      `.${inputElement.id}-error`
-    );
+      `.${inputElement.id}-error`);
     errorElement.textContent = errorMessage;
     errorElement.classList.add(this.inputErrorVisible, this.inputInvalid);
   }
@@ -89,7 +88,7 @@ export class formValidator {
   // hides error message
 
   _hideInputError(form, inputElement) {
-    const errorElement = form.querySelector(`.${inputElement.id}-error`);
+    const errorElement = this.form.querySelector(`.${inputElement.id}-error`);
     errorElement.classList.remove(this.inputErrorVisible, this.inputInvalid);
     errorElement.textContent = "";
   }
@@ -113,29 +112,11 @@ export const submitButtonDisabled = (buttonElement, config) => {
 
 // enableValidation(config);
 
-const editProfileValidator = new formValidator(config, popupEditProfile);
-const addCardValidator = new formValidator(config, popupAddCard);
+const editProfileValidator = new formValidator(config, editProfileForm);
+const addCardValidator = new formValidator(config, addCardForm);
 
   editProfileValidator.enableValidation();
   addCardValidator.enableValidation();
 
 
-  //creates aaray from form and fieldset
-  //enables validation
-
-  // enableValidation() {
-  //   const formList = Array.from(document.querySelectorAll(this.formSelector));
-
-  //   formList.forEach((form) => {
-  //     this._setEventListeners(form);
-  //   });
-  // }
-
-
-  // _toggleButtonState = (inputElement, buttonElement) => {
-  //   if (_hasInvalidInput(inputElement)) {
-  //     submitButtonDisabled(buttonElement);
-  //   } else {
-  //     _submitButtonEnabled(buttonElement);
-  //   }
-  // };
+  
