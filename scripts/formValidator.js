@@ -32,7 +32,15 @@ export class formValidator {
     return this.form;
   }
 
-
+  _toggleButtonState = () => {
+    if (this._hasInvalidInput()) {
+      this.submitButtonSelector.setAttribute("disabled", true);
+      this.submitButtonSelector.classList.add(this.inactiveButtonClass);
+    } else {
+      this.submitButtonSelector.removeAttribute("disabled");
+      this.submitButtonSelector.classList.remove(this.inactiveButtonClass);
+    }
+  };
    //should be connected to input validity check function and toggle button state function
   _setEventListener() {
     this.inputList.forEach((inputElement) => {
@@ -64,15 +72,7 @@ export class formValidator {
    
    //toggles button to active and inactive
 
-   _toggleButtonState = () => {
-    if (this._hasInvalidInput()) {
-      this.submitButtonSelector.setAttribute("disabled", true);
-      this.submitButtonSelector.classList.add(this.inactiveButtonClass);
-    } else {
-      this.submitButtonSelector.removeAttribute("disabled");
-      this.submitButtonSelector.classList.remove(this.inactiveButtonClass);
-    }
-  };
+  
 
 
   // shows error message
