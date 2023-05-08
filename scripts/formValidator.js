@@ -1,14 +1,15 @@
 import { config } from "./script.js";
 
-console.log(config);
 
 const popupAddCard = document.querySelector(".pop-up_type_place");
 const popupEditProfile = document.querySelector(".pop-up_type_user");
 
+console.log(config);
+
 export class formValidator {
-  constructor(config, formElement) {
+  constructor(config, form) {
     this.config = config;
-    this.formElement = formElement;
+    this.form = form;
     this.formSelector = config.formSelector;
     this.fieldSelector = config.fieldSelector;
     this.submitButtonSelector = config.submitButtonSelector;
@@ -16,29 +17,29 @@ export class formValidator {
     this.inputErrorVisible = config.inputErrorVisible;
     this.inputInvalid = config.inputInvalid;
     this.errorClass = config.errorClass;
-    this.inputList = Array.from(this.formElement.querySelectorAll(this.fieldSelector));
-    this.buttonElement = this.formElement.querySelector(this.submitButtonSelector);
+    this.inputList = Array.from(this.form.querySelectorAll('.pop-up__field'));
+    this.buttonElement = config.submitButtonSelector;
     
   }
-  
-  
+
 
   //Validation function - shall be connected to seteventlisteners
   enableValidation() {
-    this.inputlist._setEventListeners("submit", (evt) => {
-      evt.preventDefault()
+    this.inputList.addEventListener("submit", (evt) => {
+      evt.preventDefault();
+      this._setEventListener();
     });
-    this._setEventListeners()
-    return this.inputlist;
+   
+    return this.inputList;
   }
 
-  _setEventListeners() {
-    //should be connected to input validity check function and toggle button state function
 
-    this.inputList.forEach((inputElement) => {
+   //should be connected to input validity check function and toggle button state function
+  _setEventListener() {
+    this.form.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
         this._checkInputValidity(inputElement);
-        this._toggleButtonState();
+        this._toggleButtonState(this.submitButtonSelector);
       });
     });
   }
@@ -78,7 +79,7 @@ export class formValidator {
 
   _showInputError(inputElement, errorMessage) {
     //looking for error input
-    const errorElement = this.formElement.querySelector(
+    const errorElement = this.form.querySelector(
       `.${inputElement.id}-error`
     );
     errorElement.textContent = errorMessage;
@@ -87,8 +88,8 @@ export class formValidator {
 
   // hides error message
 
-  _hideInputError(formElement, inputElement) {
-    const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  _hideInputError(form, inputElement) {
+    const errorElement = form.querySelector(`.${inputElement.id}-error`);
     errorElement.classList.remove(this.inputErrorVisible, this.inputInvalid);
     errorElement.textContent = "";
   }
@@ -125,8 +126,8 @@ const addCardValidator = new formValidator(config, popupAddCard);
   // enableValidation() {
   //   const formList = Array.from(document.querySelectorAll(this.formSelector));
 
-  //   formList.forEach((formElement) => {
-  //     this._setEventListeners(formElement);
+  //   formList.forEach((form) => {
+  //     this._setEventListeners(form);
   //   });
   // }
 
