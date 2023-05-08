@@ -17,7 +17,7 @@ export class formValidator {
     this.inputInvalid = config.inputInvalid;
     this.errorClass = config.errorClass;
     this.inputList = Array.from(this.form.querySelectorAll(this.fieldSelector));
-    this.buttonElement = config.submitButtonSelector;
+    // this.buttonElement = config.submitButtonSelector;
   
   }
 
@@ -38,28 +38,16 @@ export class formValidator {
     this.inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
         this._checkInputValidity(inputElement);
-        this._toggleButtonState(this.submitButtonSelector);
+        this._toggleButtonState();
         
       });
     });
   }
 
-  //toggles button to active and inactive
-
-  _toggleButtonState = () => {
-    if (this._hasInvalidInput()) {
-      this.buttonElement.setAttribute("disabled", true);
-      this.buttonElement.classList.add(this.inactiveButtonClass);
-    } else {
-      this.buttonElement.removeAttribute("disabled", true);
-      this.buttonElement.classList.remove(this.inactiveButtonClass);
-    }
-  };
-
   //checks input status of all inputs
 
-  _hasInvalidInput = (inputList) => {
-    return inputList.some((inputElement) => {
+  _hasInvalidInput = () => {
+    return this.inputList.some((inputElement) => {
       return !inputElement.validity.valid;
     });
   };
@@ -74,6 +62,18 @@ export class formValidator {
     }
   }
    
+   //toggles button to active and inactive
+
+   _toggleButtonState = () => {
+    if (this._hasInvalidInput()) {
+      this.submitButtonSelector.setAttribute("disabled", true);
+      this.submitButtonSelector.classList.add(this.inactiveButtonClass);
+    } else {
+      this.submitButtonSelector.removeAttribute("disabled");
+      this.submitButtonSelector.classList.remove(this.inactiveButtonClass);
+    }
+  };
+
 
   // shows error message
 
