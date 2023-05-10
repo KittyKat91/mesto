@@ -21,7 +21,7 @@ export class Card {
     popupImgBig.classList.remove("pop-up_opened");
   }
 
-  createNewPlace() {
+   createNewPlace = () => {
     this._view = Card._template.querySelector(".place").cloneNode(true);
     this._image = this._view.querySelector(".place__img");
     this._image.src = this._link;

@@ -1,6 +1,5 @@
 import { Card } from "./card.js";
 import { submitButtonDisabled } from "./formValidator.js";
-import { formValidator } from "./formValidator.js";
 
 //inputs of the card
 const cardInputs = {
@@ -36,26 +35,20 @@ const newPlaceForm = document.querySelector(".pop-up_type_place"); //new place p
 const popupContainerCloseBtn = document.querySelector(
     ".pop-up__container-button-close"
 ); //close button
-
 const cardsContainer = document.querySelector(cardInputs.placecardList);
 const popupImgBig = document.querySelector(cardInputs.placeBigImage);
-
 const formNewPlace = document.querySelector(".pop-up__form_type_addplace");
 const formNewPlaceSubmitButton = formNewPlace.querySelector(
     ".pop-up__button-submit"
 );
 const placePopupTitle = document.querySelector(".pop-up__field-title");
 const placePopupLink = document.querySelector(".pop-up__field-link");
-
 const popupProfileName = document.querySelector(".pop-up__field-name");
 const popupProfileBio = document.querySelector(".pop-up__field-bio");
 const editedProfileName = document.querySelector(".profile__name");
 const editedProfileBio = document.querySelector(".profile__bio");
 const popupUser = document.querySelector(".pop-up_type_user");
 const popupEdit = document.querySelector(".profile__edit-button");
-
-const userPopupCloseButton = document.querySelector(".pop-up__button-close");
-
 const profileEditFormElement = document.querySelector(".pop-up__submitform");
 
 
@@ -112,6 +105,16 @@ initialCards.forEach((item) => {
     document.querySelector('.places__cards').append(cardElement);
     
 })
+//adding new cards
+function renderPlace(container, data, position = "before") {
+    const newCard = new Card ();
+    if (position === "before") {
+        container.prepend(newCard.createNewPlace(data.link, data.name));
+    }
+    if (position === "after") {
+        container.append(newCard.createNewPlace(data.link, data.name));
+    }
+}
 
 //profile edit form
 function submitFormHandler(evt) {
@@ -131,6 +134,16 @@ function submitCardHandler(event) {
     renderPlace(cardsContainer, item, "before");
     closePopup(newPlaceForm);
 }
+
+//adding new cards
+// function renderPlace(container, data, position = "before") {
+//     if (position === "before") {
+//         container.prepend(createNewPlace(data.link, data.name));
+//     }
+//     if (position === "after") {
+//         container.append(createNewPlace(data.link, data.name));
+//     }
+// }
 
 
 newPlaceAdd.addEventListener ("click", () => {
@@ -194,8 +207,9 @@ popupEdit.addEventListener("click", () => {
 //esc and overlay click close pop-up
 
 document.addEventListener("keydown", function (evt) {
+    const popupOpened = document.querySelector(".pop-up_opened");
     if (evt.key === "Escape") {
-        closePopup();
+        closePopup(popupOpened);
     }
 });
 

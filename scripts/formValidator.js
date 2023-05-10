@@ -22,6 +22,27 @@ export class formValidator {
   }
 
 
+  // shows error message
+
+  _showInputError = (inputElement, errorMessage) => {
+    //looking for error input
+    console.log(this.form);
+    const errorElement = this.form.querySelector(
+      `.${inputElement.id}-error`);
+      console.log(this.form);
+    errorElement.textContent = errorMessage;
+    errorElement.classList.add(this.inputErrorVisible, this.inputInvalid);
+  }
+
+  // hides error message
+
+  _hideInputError = (inputElement) => {
+    const errorElement = this.form.querySelector(
+      `.${inputElement.id}-error`);
+    errorElement.classList.remove(this.inputErrorVisible, this.inputInvalid);
+    errorElement.textContent = "";
+  }
+
   //Validation function - shall be connected to seteventlisteners
   enableValidation() {
     this.form.addEventListener("submit", (evt) => {
@@ -32,6 +53,22 @@ export class formValidator {
     return this.form;
   }
 
+ 
+   //should be connected to input validity check function and toggle button state function
+  _setEventListener() {
+    this.submitButtonSelector = this.form.querySelector(this.submitButtonSelector);
+    this._toggleButtonState(this.submitButtonSelector);
+    this.inputList.forEach((inputElement) => {
+      inputElement.addEventListener("input", () => {
+        this._checkInputValidity(inputElement);
+        this._toggleButtonState();
+
+        
+      });
+    });
+  }
+  //toggles button to active and inactive
+
   _toggleButtonState = () => {
     if (this._hasInvalidInput()) {
       this.submitButtonSelector.setAttribute("disabled", true);
@@ -41,16 +78,6 @@ export class formValidator {
       this.submitButtonSelector.classList.remove(this.inactiveButtonClass);
     }
   };
-   //should be connected to input validity check function and toggle button state function
-  _setEventListener() {
-    this.inputList.forEach((inputElement) => {
-      inputElement.addEventListener("input", () => {
-        this._checkInputValidity(inputElement);
-        this._toggleButtonState();
-        
-      });
-    });
-  }
 
   //checks input status of all inputs
 
@@ -70,28 +97,7 @@ export class formValidator {
     }
   }
    
-   //toggles button to active and inactive
 
-  
-
-
-  // shows error message
-
-  _showInputError(inputElement, errorMessage) {
-    //looking for error input
-    const errorElement = this.form.querySelector(
-      `.${inputElement.id}-error`);
-    errorElement.textContent = errorMessage;
-    errorElement.classList.add(this.inputErrorVisible, this.inputInvalid);
-  }
-
-  // hides error message
-
-  _hideInputError(form, inputElement) {
-    const errorElement = this.form.querySelector(`.${inputElement.id}-error`);
-    errorElement.classList.remove(this.inputErrorVisible, this.inputInvalid);
-    errorElement.textContent = "";
-  }
 
 
 //enable submit button
@@ -99,7 +105,6 @@ _submitButtonEnabled = (buttonElement, config) => {
   buttonElement.removeAttribute("disabled", true);
   buttonElement.classList.remove(config.inactiveButtonClass);
 };
-
 }
 
 
