@@ -26,10 +26,8 @@ export class formValidator {
 
   _showInputError = (inputElement, errorMessage) => {
     //looking for error input
-    console.log(this.form);
     const errorElement = this.form.querySelector(
       `.${inputElement.id}-error`);
-      console.log(this.form);
     errorElement.textContent = errorMessage;
     errorElement.classList.add(this.inputErrorVisible, this.inputInvalid);
   }
@@ -43,6 +41,17 @@ export class formValidator {
     errorElement.textContent = "";
   }
 
+  // checks if specific one input is valid and throws eror message if it is not
+
+  _checkInputValidity = (inputElement) => {
+    if (!inputElement.validity.valid) {
+      this._showInputError(inputElement, inputElement.validationMessage);
+    } else {
+      this._hideInputError(inputElement);
+    }
+  }
+  
+
   //Validation function - shall be connected to seteventlisteners
   enableValidation() {
     this.form.addEventListener("submit", (evt) => {
@@ -52,7 +61,6 @@ export class formValidator {
     this._setEventListener();
     return this.form;
   }
-
  
    //should be connected to input validity check function and toggle button state function
   _setEventListener() {
@@ -86,17 +94,6 @@ export class formValidator {
       return !inputElement.validity.valid;
     });
   };
-
-// checks if specific one input is valid and throws eror message if it is not
-
-  _checkInputValidity(inputElement) {
-    if (!inputElement.validity.valid) {
-      this._showInputError(inputElement, inputElement.errorMessage);
-    } else {
-      this._hideInputError(inputElement);
-    }
-  }
-   
 
 
 
