@@ -1,9 +1,4 @@
-import { config } from "./script.js";
-
-
-const addCardForm = document.querySelector(".pop-up_type_place .pop-up__form");
-const editProfileForm = document.querySelector(".pop-up_type_user .pop-up__form");
-
+// import { config } from "./script.js";
 
 export class formValidator {
   constructor(config, form) {
@@ -18,28 +13,24 @@ export class formValidator {
     this.errorClass = config.errorClass;
     this.inputList = Array.from(this.form.querySelectorAll(this.fieldSelector));
     // this.buttonElement = config.submitButtonSelector;
-  
   }
-
 
   // shows error message
 
   _showInputError = (inputElement, errorMessage) => {
     //looking for error input
-    const errorElement = this.form.querySelector(
-      `.${inputElement.id}-error`);
+    const errorElement = this.form.querySelector(`.${inputElement.id}-error`);
     errorElement.textContent = errorMessage;
     errorElement.classList.add(this.inputErrorVisible, this.inputInvalid);
-  }
+  };
 
   // hides error message
 
   _hideInputError = (inputElement) => {
-    const errorElement = this.form.querySelector(
-      `.${inputElement.id}-error`);
+    const errorElement = this.form.querySelector(`.${inputElement.id}-error`);
     errorElement.classList.remove(this.inputErrorVisible, this.inputInvalid);
     errorElement.textContent = "";
-  }
+  };
 
   // checks if specific one input is valid and throws eror message if it is not
 
@@ -49,29 +40,27 @@ export class formValidator {
     } else {
       this._hideInputError(inputElement);
     }
-  }
-  
+  };
 
   //Validation function - shall be connected to seteventlisteners
   enableValidation() {
     this.form.addEventListener("submit", (evt) => {
       evt.preventDefault();
-      
     });
     this._setEventListener();
     return this.form;
   }
- 
-   //should be connected to input validity check function and toggle button state function
+
+  //should be connected to input validity check function and toggle button state function
   _setEventListener() {
-    this.submitButtonSelector = this.form.querySelector(this.submitButtonSelector);
+    this.submitButtonSelector = this.form.querySelector(
+      this.submitButtonSelector
+    );
     this._toggleButtonState(this.submitButtonSelector);
     this.inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
         this._checkInputValidity(inputElement);
         this._toggleButtonState();
-
-        
       });
     });
   }
@@ -94,31 +83,10 @@ export class formValidator {
       return !inputElement.validity.valid;
     });
   };
-
-
-
-//enable submit button
-_submitButtonEnabled = (buttonElement, config) => {
-  buttonElement.removeAttribute("disabled", true);
-  buttonElement.classList.remove(config.inactiveButtonClass);
-};
 }
-
 
 //disable submit button
 export const submitButtonDisabled = (buttonElement, config) => {
   buttonElement.setAttribute("disabled", true);
   buttonElement.classList.add(config.inactiveButtonClass);
-  
 };
-
-// enableValidation(config);
-
-const editProfileValidator = new formValidator(config, editProfileForm);
-const addCardValidator = new formValidator(config, addCardForm);
-
-  editProfileValidator.enableValidation();
-  addCardValidator.enableValidation();
-
-
-  
