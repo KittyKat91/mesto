@@ -38,9 +38,9 @@ export class Card {
     this._popupInnerTitle.textContent = this._name; 
     this._popupInnerImg.alt = this._name; 
     popupImgBig.classList.add("pop-up_opened"); 
-    popupImgBig.addEventListener("keyup", () => handleKeyUpEscape());
+    document.addEventListener("keyup", (e) => handleKeyUpEscape(e));
     
-    handleKeyUpEscape(); 
+    handleKeyUpEscape(popupImgBig); 
  }
 
 
