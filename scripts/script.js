@@ -84,7 +84,7 @@ const initialCards = [
 ];
 
 //esc and overlay click close pop-up
-function handleKeyUpEscape(evt) {
+export function handleKeyUpEscape(evt) {
   const popupOpened = document.querySelector(".pop-up_opened");
   if (popupOpened && evt.key === "Escape") {
     closePopup(popupOpened);
@@ -107,12 +107,13 @@ function closeActivePopup() {
   }
 }
 
-function handleImageClose() {
-  const popupInnerImg = document.querySelector(".pop-up__photo");
+// export function handleImageClose() {
+//   const popupInnerImg = document.querySelector(".pop-up__photo");
 
-  popupInnerImg.src = "";
-  popupImgBig.classList.remove("pop-up_opened");
-}
+//   popupInnerImg.src = "";
+//   popupImgBig.classList.remove("pop-up_opened");
+
+// }
 
 // rendering new cards from Card Class
 initialCards.forEach((data) => {
