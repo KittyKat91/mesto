@@ -3,7 +3,7 @@ import { submitButtonDisabled } from "./formValidator.js";
 import { formValidator } from "./formValidator.js";
 
 //inputs of the card
-const cardInputs = {
+export const cardInputs = {
   place: ".place",
   placeimg: ".place__img", //image of the place
   placeBigImage: ".pop-up_type_image",
@@ -105,6 +105,13 @@ function closeActivePopup() {
   if (popupOpened) {
     closePopup(popupOpened);
   }
+}
+
+function handleImageClose() {
+  const popupInnerImg = document.querySelector(".pop-up__photo");
+
+  popupInnerImg.src = "";
+  popupImgBig.classList.remove("pop-up_opened");
 }
 
 // rendering new cards from Card Class
