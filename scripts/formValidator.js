@@ -1,4 +1,3 @@
-// import { config } from "./script.js";
 
 export class formValidator {
   constructor(config, form) {
