@@ -83,10 +83,12 @@ export class formValidator {
       return !inputElement.validity.valid;
     });
   };
-}
-
-//disable submit button
-export const submitButtonDisabled = (buttonElement, config) => {
+  //disable submit button
+  disableSubmitButton = (buttonElement, config) => {
   buttonElement.setAttribute("disabled", true);
   buttonElement.classList.add(config.inactiveButtonClass);
 };
+
+}
+
+

@@ -1,5 +1,5 @@
 import { Card } from "./card.js";
-import { submitButtonDisabled } from "./formValidator.js";
+import { openPopup, closePopup } from "../utils/utils.js";
 import { formValidator } from "./formValidator.js";
 
 //inputs of the card
@@ -83,37 +83,7 @@ const initialCards = [
   },
 ];
 
-//esc and overlay click close pop-up
-export function handleKeyUpEscape(evt) {
-  const popupOpened = document.querySelector(".pop-up_opened");
-  if (popupOpened && evt.key === "Escape") {
-    closePopup(popupOpened);
-  }
-}
 
-function openPopup(modal) {
-  modal.classList.add("pop-up_opened");
-  document.addEventListener("keydown", handleKeyUpEscape);
-}
-
-function closePopup(modal) {
-  modal.classList.remove("pop-up_opened");
-  document.removeEventListener("keydown", handleKeyUpEscape);
-}
-
-function closeActivePopup() {
-  if (popupOpened) {
-    closePopup(popupOpened);
-  }
-}
-
-// export function handleImageClose() {
-//   const popupInnerImg = document.querySelector(".pop-up__photo");
-
-//   popupInnerImg.src = "";
-//   popupImgBig.classList.remove("pop-up_opened");
-
-// }
 
 // rendering new cards from Card Class
 initialCards.forEach((data) => {
@@ -142,7 +112,7 @@ function submitCardHandler(event) {
 }
 
 newPlaceAdd.addEventListener("click", () => {
-  submitButtonDisabled(formNewPlaceSubmitButton, config);
+  addCardValidator.disableSubmitButton(formNewPlaceSubmitButton, config);
   openPopup(newPlaceForm);
 });
 
@@ -155,22 +125,6 @@ function submitEditProfileForm(evt) {
   editedProfileBio.textContent = popupProfileBio.value;
   closePopup(popupUser);
 }
-
-//close function event listeners
-function closePopupOverlay(evt) {
-  if (
-    evt.target.classList.contains("pop-up") ||
-    evt.target.classList.contains("pop-up__button-close")
-  ) {
-    closeActivePopup();
-  }
-}
-
-//closing pop-up through overlay
-const popups = document.querySelectorAll(".pop-up");
-popups.forEach((popup) => {
-  popup.addEventListener("click", closePopupOverlay);
-});
 
 //big image closing function
 popupImgBig.addEventListener("click", (evt) => {

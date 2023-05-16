@@ -1,7 +1,10 @@
 
-import { handleKeyUpEscape } from "./script.js";
+import { handleKeyUpEscape } from "../utils/utils.js";
+
 
 const popupImgBig = document.querySelector(".pop-up_type_image");
+const popupInnerImg = popupImgBig.querySelector(".pop-up__photo");
+const popupInnerTitle = popupImgBig.querySelector(".pop-up__caption");
 
 export class Card {
   static _template = document.querySelector("#place__template").content;
@@ -24,21 +27,17 @@ export class Card {
     this._likeBtn = this._view.querySelector(".place__like-button");
     this._deleteBtn = this._view.querySelector(".place__button-delete");
     this._popupImgClose = this._view.querySelector(".pop-up__button-close");
-    this._popupInnerImg = this._view.querySelector(".pop-up__photo");
-    this._popupInnerTitle = this._view.querySelector(".pop-up__title");
     this._setEventListeners();
    
     return this._view;
   }
 
   _handleImageOpen() { 
-    this._popupInnerImg = popupImgBig.querySelector(".pop-up__photo");
-    this._popupInnerTitle = popupImgBig.querySelector(".pop-up__caption"); 
-    this._popupInnerImg.src = this._link; 
-    this._popupInnerTitle.textContent = this._name; 
-    this._popupInnerImg.alt = this._name; 
+    popupInnerImg.src = this._link; 
+    popupInnerTitle.textContent = this._name; 
+    popupInnerImg.alt = this._name; 
     popupImgBig.classList.add("pop-up_opened"); 
-    document.addEventListener("keyup", (e) => handleKeyUpEscape(e));
+    document.addEventListener("keyup", (popupImgBig) => handleKeyUpEscape(popupImgBig));
     
     handleKeyUpEscape(popupImgBig); 
  }
