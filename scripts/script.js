@@ -83,8 +83,6 @@ const initialCards = [
   },
 ];
 
-
-
 // rendering new cards from Card Class
 initialCards.forEach((data) => {
   renderPlace(placesCard, data, "after");

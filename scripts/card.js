@@ -1,6 +1,4 @@
-
-import { handleKeyUpEscape } from "../utils/utils.js";
-
+import { openPopup } from "../utils/utils.js";
 
 const popupImgBig = document.querySelector(".pop-up_type_image");
 const popupInnerImg = popupImgBig.querySelector(".pop-up__photo");
@@ -28,20 +26,17 @@ export class Card {
     this._deleteBtn = this._view.querySelector(".place__button-delete");
     this._popupImgClose = this._view.querySelector(".pop-up__button-close");
     this._setEventListeners();
-   
+
     return this._view;
+  };
+
+  _handleImageOpen() {
+    popupInnerImg.src = this._link;
+    popupInnerTitle.textContent = this._name;
+    popupInnerImg.alt = this._name;
+    popupImgBig.classList.add("pop-up_opened");
+    document.addEventListener("click", () => openPopup(popupImgBig));
   }
-
-  _handleImageOpen() { 
-    popupInnerImg.src = this._link; 
-    popupInnerTitle.textContent = this._name; 
-    popupInnerImg.alt = this._name; 
-    popupImgBig.classList.add("pop-up_opened"); 
-    document.addEventListener("keyup", (popupImgBig) => handleKeyUpEscape(popupImgBig));
-    
-    handleKeyUpEscape(popupImgBig); 
- }
-
 
   _getCardTemplate() {
     return Card._template.querySelector(".place").cloneNode(true);
@@ -54,7 +49,8 @@ export class Card {
   _setEventListeners() {
     this._deleteBtn.addEventListener("click", () => this._deletePlace());
     this._image.addEventListener("click", () => this._handleImageOpen());
-    this._likeBtn.addEventListener("click", () => this._likeBtn.classList.toggle("place__like-button_active"));
+    this._likeBtn.addEventListener("click", () =>
+      this._likeBtn.classList.toggle("place__like-button_active")
+    );
   }
 }
-

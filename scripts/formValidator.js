@@ -1,4 +1,3 @@
-
 export class formValidator {
   constructor(config, form) {
     this.config = config;
@@ -84,10 +83,7 @@ export class formValidator {
   };
   //disable submit button
   disableSubmitButton = (buttonElement, config) => {
-  buttonElement.setAttribute("disabled", true);
-  buttonElement.classList.add(config.inactiveButtonClass);
-};
-
+    buttonElement.setAttribute("disabled", true);
+    buttonElement.classList.add(config.inactiveButtonClass);
+  };
 }
-
-
