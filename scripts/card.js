@@ -35,7 +35,7 @@ export class Card {
     popupInnerTitle.textContent = this._name;
     popupInnerImg.alt = this._name;
     popupImgBig.classList.add("pop-up_opened");
-    document.addEventListener("click", () => openPopup(popupImgBig));
+    openPopup(popupImgBig);
   }
 
   _getCardTemplate() {
