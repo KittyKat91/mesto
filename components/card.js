@@ -1,17 +1,19 @@
-import { openPopup } from "../utils/utils.js";
-
 const popupImgBig = document.querySelector(".pop-up_type_image");
 const popupInnerImg = popupImgBig.querySelector(".pop-up__photo");
 const popupInnerTitle = popupImgBig.querySelector(".pop-up__caption");
 
-export class Card {
+export default class Card {
   static _template = document.querySelector("#place__template").content;
 
-  constructor(link, name, cardInputs, template) {
-    this._link = link;
-    this._name = name;
-    this.cardInputs = cardInputs;
-    this.template = template;
+  constructor({ data, handleCardClick }, cardSelector) {
+    this._link = data.link;
+    this._name = data.name;
+    this._handleCardClick = handleCardClick;
+    this._cardSelector = cardSelector;
+  }
+
+  _getCardTemplate() {
+    return Card._template.querySelector(".place").cloneNode(true);
   }
 
   createNewPlace = () => {
@@ -25,22 +27,11 @@ export class Card {
     this._likeBtn = this._view.querySelector(".place__like-button");
     this._deleteBtn = this._view.querySelector(".place__button-delete");
     this._popupImgClose = this._view.querySelector(".pop-up__button-close");
+
     this._setEventListeners();
 
     return this._view;
   };
-
-  _handleImageOpen() {
-    popupInnerImg.src = this._link;
-    popupInnerTitle.textContent = this._name;
-    popupInnerImg.alt = this._name;
-    popupImgBig.classList.add("pop-up_opened");
-    openPopup(popupImgBig);
-  }
-
-  _getCardTemplate() {
-    return Card._template.querySelector(".place").cloneNode(true);
-  }
 
   _deletePlace() {
     this._view.remove();
@@ -48,7 +39,7 @@ export class Card {
 
   _setEventListeners() {
     this._deleteBtn.addEventListener("click", () => this._deletePlace());
-    this._image.addEventListener("click", () => this._handleImageOpen());
+    // this._image.addEventListener("click", () => this._handleCardClick(this._link, this._name));
     this._likeBtn.addEventListener("click", () =>
       this._likeBtn.classList.toggle("place__like-button_active")
     );
