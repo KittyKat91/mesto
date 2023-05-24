@@ -1,5 +1,6 @@
 export default class Popup {
     constructor(popupSelector) {
+        console.log (popupSelector);
       this._popup = document.querySelector(popupSelector);
       this._handleKeyUpEscape = this._handleKeyUpEscape.bind(this);
       this._handleOverlayClose = this._handleOverlayClose.bind(this);
@@ -35,7 +36,7 @@ export default class Popup {
       this._popup.removeEventListener("click", this._handleOverlayClose);
     }
   
-    _handleOverlayClose() {
+    _handleOverlayClose(evt) {
       if (
         evt.target.classList.contains("pop-up__button-close") ||
         evt.target.classList.contains("pop-up_opened")

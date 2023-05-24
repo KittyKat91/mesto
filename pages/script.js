@@ -64,17 +64,19 @@ popupAddCard.setEventListeners();
 popupAddCard.openPopup();
 
 
-const popupImg = new PicturePopup (popupImgBig);
-  popupImg.setEventListeners();
+// const popupImg = new PicturePopup (popupImgBig);
+//   popupImg.setEventListeners();
 
 const handleCardClick = (name, link) => {
   popupImg.openPopup(name, link)
 }
 
-const editProfileInfo = new UserInfo ({
-  name: editedProfileName,
-  bio: editedProfileBio
-})
+
+
+// const editProfileInfo = new UserInfo ({
+//   name: editedProfileName,
+//   bio: editedProfileBio
+// })
 
 
 
