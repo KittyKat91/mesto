@@ -8,7 +8,7 @@ import Section from "../components/section.js";
 import UserInfo from "../components/userinfo.js";
 
 import { cardInputs, config, newPlaceAdd, 
-  newPlaceForm, popupContainerCloseBtn, cardsContainer, popupImgBig, formNewPlaceSubmitButton, 
+  formNewPlace, popupContainerCloseBtn, cardsContainer, popupImgBig, formNewPlaceSubmitButton, 
   placePopupTitle, placePopupLink, popupProfileName, popupProfileBio, editedProfileName, editedProfileBio, popupUser, 
   popupEdit, profileEditFormElement, addCardForm, editProfileForm, placesCard, initialCards } from "../utils/utils.js"
 
@@ -36,7 +36,7 @@ function renderPlace(container, data, position = "before") {
   const card = new Card({
     data: data,
     handleCardClick: (link, name) => {
-      popupImgBig._picturePopupOpen(link, name);
+      popupImgBig.handleCardClick(link, name);
     }
   });
 
@@ -49,11 +49,32 @@ function renderPlace(container, data, position = "before") {
   }
 }
 
+// //card edit pop-up
+function submitCardHandler(event) {
+  event.preventDefault();
+  const item = { name: placePopupTitle.value, link: placePopupLink.value };
+  placePopupTitle.value = "";
+  placePopupLink.value = "";
+  renderPlace(cardsContainer, item, "before");
+  closePopup(newPlaceForm);
+}
+
+const popupAddCard = new PopupWithForm(submitCardHandler, ".pop-up__form_type_addplace");
+popupAddCard.setEventListeners();
+popupAddCard.openPopup();
 
 
+const popupImg = new PicturePopup (popupImgBig);
+  popupImg.setEventListeners();
 
-const popupImg = new PicturePopup (".pop-up_type_image");
-  popupImg.picturePopupOpen();
+const handleCardClick = (name, link) => {
+  popupImg.openPopup(name, link)
+}
+
+const editProfileInfo = new UserInfo ({
+  name: editedProfileName,
+  bio: editedProfileBio
+})
 
 
 

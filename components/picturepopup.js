@@ -9,7 +9,7 @@ export default class PicturePopup extends Popup {
     }
 
 
-    _picturePopupOpen(link, name) {
+    picturePopupOpen(link, name) {
         super.openPopup()
         this._popupImg.src = link;
         this._popupImgTitle.textContent = name;

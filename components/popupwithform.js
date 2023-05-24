@@ -1,11 +1,13 @@
 import Popup from "./popup.js";
 
 export default class PopupWithForm extends Popup { 
-    constructor ({submitForm}, popupSelector){
+    constructor (submitForm, popupSelector){
     super(popupSelector);
+    console.log(submitForm, popupSelector);
     this._submitForm = submitForm;
-    this._popupForm = document.querySelector(".pop-up__form");
+    this._popupForm = this._popup.querySelector(popupSelector);
     this._submitBtn = this._popupForm.querySelector(".pop-up__button-submit");
+
     this._inputList = Array.from(this._popupForm.querySelectorAll(".pop-up__field"))
     this._handleSubmit = this._handleSubmit.bind(this);
 }
@@ -17,14 +19,16 @@ export default class PopupWithForm extends Popup {
 
     //sets the event listener towards submit button
     setEventListeners() {
-        super._setEventListeners();
-        this._popupForm.addEventListener("submit", this._handleSubmit);
+        super.setEventListeners();
+        this._popupForm.addEventListener("submit", (evt) => { 
+            evt.preventDefault();
+            this._handleSubmit(evt)
+        });
     }
 
     //connected to getinputvalues function
     _handleSubmit(evt) {
-        evt.preventDefault();
-        this.submitForm(this._getInputValues());
+        this._submitForm(this._getInputValues());
     }
 
     closePopup() {

@@ -80,7 +80,7 @@ const initialCards = [
 
 
 export { cardInputs, config, newPlaceAdd, 
-  newPlaceForm, popupContainerCloseBtn, cardsContainer, popupImgBig, formNewPlaceSubmitButton, 
+  formNewPlace, popupContainerCloseBtn, cardsContainer, popupImgBig, formNewPlaceSubmitButton, 
   placePopupTitle, placePopupLink, popupProfileName, popupProfileBio, editedProfileName, editedProfileBio, popupUser, 
   popupEdit, profileEditFormElement, addCardForm, editProfileForm, placesCard, initialCards }
 
