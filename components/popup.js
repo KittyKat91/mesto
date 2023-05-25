@@ -1,6 +1,5 @@
 export default class Popup {
     constructor(popupSelector) {
-        console.log (popupSelector);
       this._popup = document.querySelector(popupSelector);
       this._handleKeyUpEscape = this._handleKeyUpEscape.bind(this);
       this._handleOverlayClose = this._handleOverlayClose.bind(this);

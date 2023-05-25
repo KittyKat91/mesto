@@ -32,11 +32,22 @@ initialCards.forEach((data) => {
   renderPlace(placesCard, data, "after");
 });
 
+// const handleCardClick = (name, link) => {
+//   popupImg.handleCardClick(name, link)
+// }
+
+// function createCardItem(itemElement) {
+//   const card = new Card ({
+//     item: itemElement,
+//     handleCardClick: () => {
+//       popupImage.open(itemElement);
+//     },}
+
 function renderPlace(container, data, position = "before") {
   const card = new Card({
     data: data,
-    handleCardClick: (link, name) => {
-      popupImgBig.handleCardClick(link, name);
+    handleCardClick: () => {
+      popupImgBig.openPopup(link, name);
     }
   });
 
@@ -50,33 +61,30 @@ function renderPlace(container, data, position = "before") {
 }
 
 // //card edit pop-up
-function submitCardHandler(event) {
-  event.preventDefault();
+function submitCardHandler() {
   const item = { name: placePopupTitle.value, link: placePopupLink.value };
   placePopupTitle.value = "";
   placePopupLink.value = "";
   renderPlace(cardsContainer, item, "before");
-  closePopup(newPlaceForm);
+  closePopup();
 }
 
-const popupAddCard = new PopupWithForm(submitCardHandler, ".pop-up__form_type_addplace");
+const popupAddCard = new PopupWithForm(submitCardHandler, ".pop-up_type_place");
 popupAddCard.setEventListeners();
 popupAddCard.openPopup();
 
 
-// const popupImg = new PicturePopup (popupImgBig);
-//   popupImg.setEventListeners();
-
-const handleCardClick = (name, link) => {
-  popupImg.openPopup(name, link)
-}
+const popupImg = new PicturePopup (popupImgBig);
+  popupImg.setEventListeners();
 
 
 
-// const editProfileInfo = new UserInfo ({
-//   name: editedProfileName,
-//   bio: editedProfileBio
-// })
+
+
+const editProfileInfo = new UserInfo ({
+  name: editedProfileName,
+  bio: editedProfileBio
+})
 
 
 

@@ -4,7 +4,7 @@ export default class PopupWithForm extends Popup {
     constructor (submitForm, popupSelector){
     super(popupSelector);
     this._submitForm = submitForm;
-    console.log(this._popup)
+    
     // this._popupForm = this._popup.querySelector(popupSelector);
     this._submitBtn = this._popup.querySelector(".pop-up__button-submit");
     this._inputList = Array.from(this._popup.querySelectorAll(".pop-up__field"))
@@ -32,6 +32,6 @@ export default class PopupWithForm extends Popup {
 
     closePopup() {
         super.closePopup();
-        this._popup.reset();
+        this._submitForm.reset();
     }
 }
