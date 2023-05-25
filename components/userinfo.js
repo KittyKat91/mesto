@@ -10,7 +10,7 @@ export default class UserInfo {
         const userInfoData = {
             name: this._name.textContent,
             bio: this._bio.textContent,
-        }
+        };
         return userInfoData;
     }
 

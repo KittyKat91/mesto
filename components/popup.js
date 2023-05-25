@@ -14,24 +14,31 @@ export default class Popup {
       this._popup.classList.remove("pop-up_opened");
       window.removeEventListener("keydown", this._handleKeyUpEscape);
     }
-  
-    _handleKeyUpEscape() {
-      this._popup.addEventListener("mousedown", (evt) => {
-        if (
-          evt.target.classList.contains("pop-up_opened") ||
-          evt.key === "Escape"
-        )
-          this.closePopup();
-      });
+
+    _handleKeyUpEscape = (evt) => {
+        if (evt.key === "escape")
+        
+        this.closePopup();
+        
     }
   
+    // _handleKeyUpEscape() {
+    //   this._popup.addEventListener("mousedown", (evt) => {
+    //     if (
+    //       evt.target.classList.contains("pop-up_opened") ||
+    //       evt.key === "Escape"
+    //     )
+    //       this.closePopup();
+    //   });
+    // }
+  
     setEventListeners() {
-      document.addEventListener("mousedown", this._handleKeyUpEscape);
+      document.addEventListener("keydown", this._handleKeyUpEscape);
       this._popup.addEventListener("click", this._handleOverlayClose);
     }
   
     _removeEventListeners() {
-      document.removeEventListener("mousedown", this._handleKeyUpEscape);
+      document.removeEventListener("keydown", this._handleKeyUpEscape);
       this._popup.removeEventListener("click", this._handleOverlayClose);
     }
   
