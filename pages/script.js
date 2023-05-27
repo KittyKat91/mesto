@@ -10,7 +10,7 @@ import UserInfo from "../components/userinfo.js";
 import { cardInputs, config, newPlaceAdd, 
   formNewPlace, popupContainerCloseBtn, cardsContainer, popupImgBig, formNewPlaceSubmitButton, 
   placePopupTitle, placePopupLink, popupProfileName, popupProfileBio, editedProfileName, editedProfileBio, popupUser, 
-  popupEditBtn, profileEditFormElement, addCardForm, editProfileForm, placesCard, initialCards } from "../utils/utils.js"
+  popupEditBtn, profileEditFormElement, addCardForm, editProfileForm, placesCard, initialCards, popupFields } from "../utils/utils.js"
 
 // enableValidation(config);
 
@@ -51,84 +51,43 @@ function renderPlace(container, data, position = "before") {
   }
 }
 
-// //card edit pop-up
+// card edit pop-up
 function submitCardHandler() {
   const item = { name: placePopupTitle.value, link: placePopupLink.value };
   placePopupTitle.value = "";
   placePopupLink.value = "";
   renderPlace(cardsContainer, item, "before");
-  closePopup();
+  popupAddCard.closePopup();
 }
 
 const popupAddCard = new PopupWithForm(submitCardHandler, ".pop-up_type_place");
 popupAddCard.setEventListeners();
 
-// newPlaceAdd.addEventListener ("click", () => ); 
+newPlaceAdd.addEventListener ("click", () => {
+  popupAddCard.openPopup()
+}); 
 
-const userInfo = new UserInfo ({
-  name: editedProfileName,
-  bio: editedProfileBio
-})
-userInfo.setEventListeners();
+//profile edit pop-up form
 
-
-popupEditBtn.addEventListener("click", () => {
-  updateProfile();
-  openPopup();
-})
-
-function updateProfile () {
-  const profileEditInputs = userInfo.getUserInfo();
-  editedProfileName.value = profileEditInputs.name;
-  editedProfileBio.value = profileEditInputs.bio;
-
-}
-
-
-const popupEditProfile = new PopupWithForm (".pop-up_type_user");
+const popupEditProfile = new PopupWithForm(submitProfileHandler, ".pop-up_type_user");
 popupEditProfile.setEventListeners();
 
-popupEditProfile.openPopup = () => {
-  const { name, bio } = userInfo.getUserInfo();
-  document.querySelector(".pop-up__input-name").value = name;
-  document.querySelector(".pop-up__input-bio").value = bio;
-};
+//indicating and linking arguments
+const userInfo = new UserInfo({
+  nameSelector: ".profile__name",
+  bioSelector: ".profile__bio",
+});
 
+//profile handler function
+function submitProfileHandler(info) {
+  const inputValues = popupEditProfile.getInputValues();
+  userInfo.setUserInfo(info, inputValues);
+  popupEditProfile.closePopup();
+}
 
-
-
-// //card edit pop-up
-// function submitCardHandler(event) {
-//   event.preventDefault();
-//   const item = { name: placePopupTitle.value, link: placePopupLink.value };
-//   placePopupTitle.value = "";
-//   placePopupLink.value = "";
-//   renderPlace(cardsContainer, item, "before");
-//   closePopup(newPlaceForm);
-// }
-
-// newPlaceAdd.addEventListener("click", () => {
-//   addCardValidator.disableSubmitButton(formNewPlaceSubmitButton, config);
-//   openPopup(newPlaceForm);
-// });
-
-// formNewPlace.addEventListener("submit", submitCardHandler);
-
-//profile edit form
-// function submitEditProfileForm(evt) {
-//   evt.preventDefault();
-//   editedProfileName.textContent = popupProfileName.value;
-//   editedProfileBio.textContent = popupProfileBio.value;
-//   closePopup(popupUser);
-// }
-
-
-// profileEditFormElement.addEventListener("submit", submitEditProfileForm);
-
-// popupEdit.addEventListener("click", () => {
-//   popupProfileName.value = editedProfileName.textContent;
-//   popupProfileBio.value = editedProfileBio.textContent;
-//   openPopup(popupUser);
-// });
-
-
+//submit function event listener
+popupEditBtn.addEventListener("click", () => {
+  popupEditProfile.openPopup();
+  userInfo.getUserInfo();
+  // popupEditProfile.setInputValues({ name, bio });
+});

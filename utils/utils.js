@@ -43,6 +43,7 @@ const editedProfileName = document.querySelector(".profile__name");
 const editedProfileBio = document.querySelector(".profile__bio");
 const popupUser = document.querySelector(".pop-up_type_user");
 const popupEditBtn = document.querySelector(".profile__edit-button");
+const popupFields = document.querySelectorAll(".pop-up__field");
 const profileEditFormElement = document.querySelector(".pop-up__submitform");
 const addCardForm = document.querySelector(".pop-up_type_place .pop-up__form");
 const editProfileForm = document.querySelector(
@@ -82,7 +83,7 @@ const initialCards = [
 export { cardInputs, config, newPlaceAdd, 
   formNewPlace, popupContainerCloseBtn, cardsContainer, popupImgBig, formNewPlaceSubmitButton, 
   placePopupTitle, placePopupLink, popupProfileName, popupProfileBio, editedProfileName, editedProfileBio, popupUser, 
-  popupEditBtn, profileEditFormElement, addCardForm, editProfileForm, placesCard, initialCards }
+  popupEditBtn, profileEditFormElement, addCardForm, editProfileForm, placesCard, initialCards, popupFields }
 
 
 //esc and overlay click close pop-up
