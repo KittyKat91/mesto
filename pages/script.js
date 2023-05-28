@@ -29,7 +29,7 @@ section.renderItems(initialCards, (item) => {
 
 // rendering initial cards from Card Class
 initialCards.forEach((data) => {
-  renderPlace(placesCard, data, "after");
+  renderPlace(placesCard, data);
 });
 
 function renderPlace(container, data, position = "before") {
@@ -78,12 +78,19 @@ const userInfo = new UserInfo({
   bioSelector: ".profile__bio",
 });
 
+// const fillUserInfo = (info) => {
+//   nameSelector.value = info.name;
+//   bioSelector.value = info.bio;
+// }
+
 //profile handler function
-function submitProfileHandler(info) {
-  const inputValues = popupEditProfile.getInputValues();
-  userInfo.setUserInfo(info, inputValues);
+function submitProfileHandler() {
+  const inputValues = userInfo.getUserInfo();
+ 
+  userInfo.setUserInfo(inputValues);
   popupEditProfile.closePopup();
 }
+
 
 //submit function event listener
 popupEditBtn.addEventListener("click", () => {
