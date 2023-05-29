@@ -1,10 +1,12 @@
-import Card from "../components/card.js";
-import Popup from "../components/popup.js";
-import formValidator from "../components/formValidator.js";
-import PicturePopup from "../components/picturepopup.js";
-import PopupWithForm from "../components/popupwithform.js";
-import Section from "../components/section.js";
-import UserInfo from "../components/userinfo.js";
+import "./pages/index.css"
+
+import Card from "./components/card.js";
+import Popup from "./components/popup.js";
+import formValidator from "./components/formValidator.js";
+import PicturePopup from "./components/picturepopup.js";
+import PopupWithForm from "./components/popupwithform.js";
+import Section from "./components/section.js";
+import UserInfo from "./components/userinfo.js";
 
 import {
   cardInputs,
@@ -29,7 +31,7 @@ import {
   placesCard,
   initialCards,
   popupFields,
-} from "../utils/utils.js";
+} from "./utils/utils.js";
 
 // enableValidation(config);
 
