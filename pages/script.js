@@ -69,32 +69,58 @@ newPlaceAdd.addEventListener ("click", () => {
 
 //profile edit pop-up form
 
+
+
 const popupEditProfile = new PopupWithForm(submitProfileHandler, ".pop-up_type_user");
 popupEditProfile.setEventListeners();
 
-//indicating and linking arguments
+// function submitProfileHandler() {
+//   const inputValues = userInfo.getUserInfo();
+ 
+//   userInfo.setUserInfo(inputValues);
+//   popupEditProfile.closePopup();
+// }
+
+// indicating and linking arguments
 const userInfo = new UserInfo({
   nameSelector: ".profile__name",
   bioSelector: ".profile__bio",
 });
 
-// const fillUserInfo = (info) => {
-//   nameSelector.value = info.name;
-//   bioSelector.value = info.bio;
-// }
-
-//profile handler function
-function submitProfileHandler() {
-  const inputValues = userInfo.getUserInfo();
- 
-  userInfo.setUserInfo(inputValues);
+// profile handler function
+function submitProfileHandler(evt) {
+  evt.preventDefault();
+  const info = popupEditProfile.getInputValues();
+  userInfo.setUserInfo(info.name, info.bio);
   popupEditProfile.closePopup();
 }
 
-
-//submit function event listener
+// submit function event listener
 popupEditBtn.addEventListener("click", () => {
   popupEditProfile.openPopup();
-  userInfo.getUserInfo();
-  // popupEditProfile.setInputValues({ name, bio });
+  const userInfoData = userInfo.getUserInfo();
+  popupEditProfile.getInputValues(userInfoData);
 });
+
+
+// const popupEditProfile = new PopupWithForm(submitProfileHandler, ".pop-up_type_user");
+// popupEditProfile.setEventListeners();
+
+// //indicating and linking arguments
+// const userInfo = new UserInfo({
+//   nameSelector: ".profile__name",
+//   bioSelector: ".profile__bio",
+// });
+
+// //profile handler function
+// function submitProfileHandler(evt, info) {
+//   console.log(info)
+//    userInfo.setUserInfo(info);
+//   popupEditProfile.closePopup();
+// }
+
+// //submit function event listener
+// popupEditBtn.addEventListener("click", () => {
+//   popupEditProfile.openPopup();
+//   userInfo.getUserInfo();
+// });
