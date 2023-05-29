@@ -1,16 +1,35 @@
-
-import  Card  from "../components/card.js";
-import  Popup  from "../components/popup.js"
-import  formValidator  from "../components/formValidator.js";
+import Card from "../components/card.js";
+import Popup from "../components/popup.js";
+import formValidator from "../components/formValidator.js";
 import PicturePopup from "../components/picturepopup.js";
 import PopupWithForm from "../components/popupwithform.js";
 import Section from "../components/section.js";
 import UserInfo from "../components/userinfo.js";
 
-import { cardInputs, config, newPlaceAdd, 
-  formNewPlace, popupContainerCloseBtn, cardsContainer, popupImgBig, formNewPlaceSubmitButton, 
-  placePopupTitle, placePopupLink, popupProfileName, popupProfileBio, editedProfileName, editedProfileBio, popupUser, 
-  popupEditBtn, profileEditFormElement, addCardForm, editProfileForm, placesCard, initialCards, popupFields } from "../utils/utils.js"
+import {
+  cardInputs,
+  config,
+  newPlaceAdd,
+  formNewPlace,
+  popupContainerCloseBtn,
+  cardsContainer,
+  popupImgBig,
+  formNewPlaceSubmitButton,
+  placePopupTitle,
+  placePopupLink,
+  popupProfileName,
+  popupProfileBio,
+  editedProfileName,
+  editedProfileBio,
+  popupUser,
+  popupEditBtn,
+  profileEditFormElement,
+  addCardForm,
+  editProfileForm,
+  placesCard,
+  initialCards,
+  popupFields,
+} from "../utils/utils.js";
 
 // enableValidation(config);
 
@@ -19,7 +38,6 @@ const addCardValidator = new formValidator(config, addCardForm);
 
 editProfileValidator.enableValidation();
 addCardValidator.enableValidation();
-
 
 const section = new Section(".places__cards");
 
@@ -36,10 +54,10 @@ function renderPlace(container, data, position = "before") {
   const card = new Card({
     data: data,
     handleCardClick: () => {
-      const popupImg = new PicturePopup (".pop-up_type_image")
+      const popupImg = new PicturePopup(".pop-up_type_image");
       popupImg.openPopup(data);
       popupImg.setEventListeners();
-    }
+    },
   });
 
   const cardElement = card.createNewPlace();
@@ -63,23 +81,9 @@ function submitCardHandler() {
 const popupAddCard = new PopupWithForm(submitCardHandler, ".pop-up_type_place");
 popupAddCard.setEventListeners();
 
-newPlaceAdd.addEventListener ("click", () => {
-  popupAddCard.openPopup()
-}); 
-
-//profile edit pop-up form
-
-
-
-const popupEditProfile = new PopupWithForm(submitProfileHandler, ".pop-up_type_user");
-popupEditProfile.setEventListeners();
-
-// function submitProfileHandler() {
-//   const inputValues = userInfo.getUserInfo();
- 
-//   userInfo.setUserInfo(inputValues);
-//   popupEditProfile.closePopup();
-// }
+newPlaceAdd.addEventListener("click", () => {
+  popupAddCard.openPopup();
+});
 
 // indicating and linking arguments
 const userInfo = new UserInfo({
@@ -87,40 +91,23 @@ const userInfo = new UserInfo({
   bioSelector: ".profile__bio",
 });
 
-// profile handler function
-function submitProfileHandler(evt) {
+function submitProfileHandler(evt, inputValues) {
   evt.preventDefault();
-  const info = popupEditProfile.getInputValues();
-  userInfo.setUserInfo(info.name, info.bio);
+  userInfo.setUserInfo(inputValues.name, inputValues.bio);
   popupEditProfile.closePopup();
 }
+
+const popupEditProfile = new PopupWithForm(
+  submitProfileHandler,
+  ".pop-up_type_user"
+);
+popupEditProfile.setEventListeners();
 
 // submit function event listener
 popupEditBtn.addEventListener("click", () => {
   popupEditProfile.openPopup();
+
   const userInfoData = userInfo.getUserInfo();
-  popupEditProfile.getInputValues(userInfoData);
+  popupProfileName.value = userInfoData.name;
+  popupProfileBio.value = userInfoData.bio;
 });
-
-
-// const popupEditProfile = new PopupWithForm(submitProfileHandler, ".pop-up_type_user");
-// popupEditProfile.setEventListeners();
-
-// //indicating and linking arguments
-// const userInfo = new UserInfo({
-//   nameSelector: ".profile__name",
-//   bioSelector: ".profile__bio",
-// });
-
-// //profile handler function
-// function submitProfileHandler(evt, info) {
-//   console.log(info)
-//    userInfo.setUserInfo(info);
-//   popupEditProfile.closePopup();
-// }
-
-// //submit function event listener
-// popupEditBtn.addEventListener("click", () => {
-//   popupEditProfile.openPopup();
-//   userInfo.getUserInfo();
-// });

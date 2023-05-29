@@ -8,14 +8,14 @@ export default class UserInfo {
 
   getUserInfo() {
     return {
-      name: this._nameElement.value,
-      bio: this._bioElement.value,
+      name: this._nameElement.textContent,
+      bio: this._bioElement.textContent,
     };
   }
 
   setUserInfo( name, bio ) {
-    this._nameElement.value = name;
-    this._bioElement.value = bio;
+    this._nameElement.textContent = name;
+    this._bioElement.textContent = bio;
   }
 }
 

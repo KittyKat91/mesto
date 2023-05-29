@@ -39,7 +39,9 @@ export default class Card {
 
   _setEventListeners() {
     this._deleteBtn.addEventListener("click", () => this._deletePlace());
-    this._image.addEventListener("click", () => this.handleCardClick(this._link, this._name));
+    this._image.addEventListener("click", () =>
+      this.handleCardClick(this._link, this._name)
+    );
     this._likeBtn.addEventListener("click", () =>
       this._likeBtn.classList.toggle("place__like-button_active")
     );

@@ -1,5 +1,5 @@
 //inputs of the card
- const cardInputs = {
+const cardInputs = {
   place: ".place",
   placeimg: ".place__img", //image of the place
   placeBigImage: ".pop-up_type_image",
@@ -14,7 +14,7 @@
   placeLikeBtnActive: ".place__like-button_active", //liked button
 };
 
- const config = {
+const config = {
   formSelector: ".pop-up__form",
   fieldSelector: ".pop-up__field",
   submitButtonSelector: '[type="submit"]',
@@ -79,12 +79,30 @@ const initialCards = [
   },
 ];
 
-
-export { cardInputs, config, newPlaceAdd, 
-  formNewPlace, popupContainerCloseBtn, cardsContainer, popupImgBig, formNewPlaceSubmitButton, 
-  placePopupTitle, placePopupLink, popupProfileName, popupProfileBio, editedProfileName, editedProfileBio, popupUser, 
-  popupEditBtn, profileEditFormElement, addCardForm, editProfileForm, placesCard, initialCards, popupFields }
-
+export {
+  cardInputs,
+  config,
+  newPlaceAdd,
+  formNewPlace,
+  popupContainerCloseBtn,
+  cardsContainer,
+  popupImgBig,
+  formNewPlaceSubmitButton,
+  placePopupTitle,
+  placePopupLink,
+  popupProfileName,
+  popupProfileBio,
+  editedProfileName,
+  editedProfileBio,
+  popupUser,
+  popupEditBtn,
+  profileEditFormElement,
+  addCardForm,
+  editProfileForm,
+  placesCard,
+  initialCards,
+  popupFields,
+};
 
 //esc and overlay click close pop-up
 // export function handleKeyUpEscape(evt) {
