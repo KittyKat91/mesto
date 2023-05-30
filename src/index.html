@@ -6,17 +6,18 @@
     <meta name="description" content="mesto - четвертый-девятые спринты на Яндекс.Практикуме">
     <title>Mesto</title>
     <meta name="author" content="Kити Самсонадзе">
-    <link rel="stylesheet" href="./pages/index.css">
+    <!-- <link rel="stylesheet" href="./pages/index.css"> -->
+    <script defer="defer" src="./index.js"></script>
 </head>
     <body class="page">
         <header class="header">
-            <img class="header__logo" src="./images/Vector.svg" alt="место_лого">
+            <img class="header__logo" src="<%=require('./images/Vector.svg')%>" alt="место_лого">
             <div class="header__line"></div>
         </header>
         <main class="main">
             <section class="profile">  
                 <div class="profile__main">        
-                    <img class="profile__avatar" src="./images/custo.svg" alt="Кусто">
+                    <img class="profile__avatar" src="<%=require('./images/custo.svg')%>" alt="Кусто">
                     <div class="profile__editable">
                         <div class="profile__info">
                             <h1 class="profile__name">Жак-Ив Кусто</h1>
