@@ -17,7 +17,7 @@ const cardInputs = {
 const config = {
   formSelector: ".pop-up__form",
   fieldSelector: ".pop-up__field",
-  submitButtonSelector: '[type="submit"]',
+  submitButton: '[type="submit"]',
   inactiveButtonClass: "button_inactive",
   inputErrorVisible: "pop-up__field-error_visible",
   inputInvalid: "pop-up__field_invalid",

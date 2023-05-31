@@ -1,8 +1,10 @@
 // should only draw the card elements, doesn't have it's own layout, only receives the template array and draws it into DOM
 
 export default class Section {
-  constructor(containerSelector) {
+  constructor( {renderer}, containerSelector) {
     this._container = document.querySelector(containerSelector);
+    this._renderer = renderer;
+    
   }
 
   addItem(element, position = "append") {
@@ -13,10 +15,14 @@ export default class Section {
     }
   }
 
-  renderItems(items, renderer) {
-    items.forEach((item) => {
-      const renderedItem = renderer(item); // passing item as an argument to a renderer function
-      this.addItem(renderedItem);
-    });
+  renderItems(items) {
+    items.forEach((item) => {this._renderer(item)})
   }
+
+  // renderItems(items, renderer) {
+  //   items.forEach((item) => {
+  //     const renderedItem = renderer(item); // passing item as an argument to a renderer function
+  //     this.addItem(renderedItem);
+  //   });
+  // }
 }

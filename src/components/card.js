@@ -1,22 +1,21 @@
-const popupImgBig = document.querySelector(".pop-up_type_image");
-const popupInnerImg = popupImgBig.querySelector(".pop-up__photo");
-const popupInnerTitle = popupImgBig.querySelector(".pop-up__caption");
-
 export default class Card {
-  static _template = document.querySelector("#place__template").content;
+   static _template = document.querySelector("#place__template").content;
 
   constructor({ data, handleCardClick }, cardSelector) {
+    // console.log(cardSelector);
     this._link = data.link;
     this._name = data.name;
-    this.handleCardClick = handleCardClick;
+    this._handleCardClick = handleCardClick;
     this._cardSelector = cardSelector;
   }
 
   _getCardTemplate() {
     return Card._template.querySelector(".place").cloneNode(true);
+    // return document.querySelector(this._cardSelector).content.querySelector(".place").cloneNode(true);
+    // return document.querySelector(this._selector).content.querySelector('.photo-card').cloneNode(true)
   }
 
-  createNewPlace = () => {
+  createNewPlace () {
     this._view = this._getCardTemplate();
     this._image = this._view.querySelector(".place__img");
     this._image.src = this._link;
@@ -40,7 +39,7 @@ export default class Card {
   _setEventListeners() {
     this._deleteBtn.addEventListener("click", () => this._deletePlace());
     this._image.addEventListener("click", () =>
-      this.handleCardClick(this._link, this._name)
+      this._handleCardClick(this._link, this._name)
     );
     this._likeBtn.addEventListener("click", () =>
       this._likeBtn.classList.toggle("place__like-button_active")
