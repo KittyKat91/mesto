@@ -1,4 +1,4 @@
-import "./index.css"
+import "./index.css";
 
 import Card from "../components/card.js";
 import FormValidator from "../components/formValidator.js";
@@ -19,6 +19,7 @@ import {
   addCardForm,
   editProfileForm,
   initialCards,
+  placeImg,
 } from "../utils/utils.js";
 
 // enableValidation(config);
@@ -29,21 +30,25 @@ const addCardValidator = new FormValidator(config, addCardForm);
 editProfileValidator.enableValidation();
 addCardValidator.enableValidation();
 
-const section = new Section(".places__cards");
+const cardList = new Section(
+  {
+    items: initialCards,
+    renderer: (item) => {
+      cardList.addItem(renderPlace(cardsContainer, item));
+    },
+  },
+  ".places__cards"
+);
 
-section.renderItems(initialCards, (item) => {
-  return renderPlace(cardsContainer, item);
-});
+cardList.renderItems();
 
+const popupImg = new PopupWithImage(".pop-up_type_image");
+popupImg.setEventListeners();
 
 function renderPlace(container, data, position = "before") {
-  const card = new Card({
-    data: data,
-    handleCardClick: () => {
-      const popupImg = new PopupWithImage(".pop-up_type_image");
-      popupImg.open(data);
-      popupImg.setEventListeners();
-    },
+  const card = new Card(data, (link, name) => {
+    popupImg.open({ name, link });
+    popupImg.setEventListeners();
   });
 
   const cardElement = card.createNewPlace();
@@ -55,12 +60,18 @@ function renderPlace(container, data, position = "before") {
   }
 }
 
-// card edit pop-up
+//item with values to create new card from popup
+const item = {
+  name: placePopupTitle.value,
+  link: placePopupLink.value,
+};
+
+// card edit pop-up submit function
 function submitCardHandler() {
-  const item = { name: placePopupTitle.value, link: placePopupLink.value };
   renderPlace(cardsContainer, item, "before");
 }
 
+//creating class example and setting event listeners
 const popupAddCard = new PopupWithForm(submitCardHandler, ".pop-up_type_place");
 popupAddCard.setEventListeners();
 
@@ -68,7 +79,7 @@ newPlaceAdd.addEventListener("click", () => {
   popupAddCard.open();
 });
 
-// indicating and linking arguments
+// indicating and linking arguments for user popup
 const userInfo = new UserInfo({
   nameSelector: ".profile__name",
   bioSelector: ".profile__bio",
@@ -84,7 +95,7 @@ const popupEditProfile = new PopupWithForm(
 );
 popupEditProfile.setEventListeners();
 
-// submit function event listener
+// submit function event listener for profile edit button
 popupEditBtn.addEventListener("click", () => {
   popupEditProfile.open();
 

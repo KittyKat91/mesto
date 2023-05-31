@@ -1,21 +1,16 @@
 export default class Card {
-   static _template = document.querySelector("#place__template").content;
-
-  constructor({ data, handleCardClick }, cardSelector) {
-    // console.log(cardSelector);
+  constructor(data, handleCardClick) {
     this._link = data.link;
     this._name = data.name;
     this._handleCardClick = handleCardClick;
-    this._cardSelector = cardSelector;
+    this._template = document.querySelector("#place__template").content;
   }
 
   _getCardTemplate() {
-    return Card._template.querySelector(".place").cloneNode(true);
-    // return document.querySelector(this._cardSelector).content.querySelector(".place").cloneNode(true);
-    // return document.querySelector(this._selector).content.querySelector('.photo-card').cloneNode(true)
+    return this._template.querySelector('.place').cloneNode(true);
   }
 
-  createNewPlace () {
+  createNewPlace() {
     this._view = this._getCardTemplate();
     this._image = this._view.querySelector(".place__img");
     this._image.src = this._link;
@@ -30,7 +25,7 @@ export default class Card {
     this._setEventListeners();
 
     return this._view;
-  };
+  }
 
   _deletePlace() {
     this._view.remove();

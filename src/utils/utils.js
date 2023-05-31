@@ -24,11 +24,11 @@ const config = {
   errorClass: "pop-up__field-error",
 };
 
-const newPlaceAdd = document.querySelector(".profile__add-button"); //plus button
-const newPlaceForm = document.querySelector(".pop-up_type_place"); //new place pop-up form
+const newPlaceAdd = document.querySelector(".profile__add-button"); //plus button 
 const popupContainerCloseBtn = document.querySelector(
   ".pop-up__container-button-close"
 ); //close button
+const placeImg = document.querySelector(".place__img")
 const cardsContainer = document.querySelector(cardInputs.placecardList);
 const popupImgBig = document.querySelector(cardInputs.placeBigImage);
 const formNewPlace = document.querySelector(".pop-up__form_type_addplace");
@@ -100,24 +100,7 @@ export {
   addCardForm,
   editProfileForm,
   placesCard,
+  placeImg,
   initialCards,
   popupFields,
 };
-
-//esc and overlay click close pop-up
-// export function handleKeyUpEscape(evt) {
-//   const popupOpened = document.querySelector(".pop-up_opened");
-//   if (popupOpened && evt.key === "Escape") {
-//     closePopup(popupOpened);
-//   }
-// }
-
-// export function openPopup(modal) {
-//   modal.classList.add("pop-up_opened");
-//   document.addEventListener("keydown", handleKeyUpEscape);
-// }
-
-// export function closePopup(modal) {
-//   modal.classList.remove("pop-up_opened");
-//   document.removeEventListener("keydown", handleKeyUpEscape);
-// }
