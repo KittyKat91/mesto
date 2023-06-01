@@ -1,13 +1,13 @@
 export default class Card {
-  constructor(data, handleCardClick) {
+  constructor(data, templateSelector, handleCardClick) {
     this._link = data.link;
     this._name = data.name;
     this._handleCardClick = handleCardClick;
-    this._template = document.querySelector("#place__template").content;
+    this._template = document.querySelector(templateSelector).content;
   }
 
   _getCardTemplate() {
-    return this._template.querySelector('.place').cloneNode(true);
+    return this._template.querySelector(".place").cloneNode(true);
   }
 
   createNewPlace() {

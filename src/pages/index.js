@@ -22,19 +22,21 @@ import {
   placeImg,
 } from "../utils/utils.js";
 
-// enableValidation(config);
 
+//form validators for user and card popup
 const editProfileValidator = new FormValidator(config, editProfileForm);
 const addCardValidator = new FormValidator(config, addCardForm);
 
 editProfileValidator.enableValidation();
 addCardValidator.enableValidation();
 
+
+//new section for initial card rendering 
 const cardList = new Section(
   {
     items: initialCards,
     renderer: (item) => {
-      cardList.addItem(renderPlace(cardsContainer, item));
+      renderPlace(item);
     },
   },
   ".places__cards"
@@ -45,46 +47,36 @@ cardList.renderItems();
 const popupImg = new PopupWithImage(".pop-up_type_image");
 popupImg.setEventListeners();
 
-function renderPlace(container, data, position = "before") {
-  const card = new Card(data, (link, name) => {
+
+function renderPlace(data, position = "append") {
+  const card = new Card(data, '#place__template', (link, name) => {
     popupImg.open({ name, link });
-    popupImg.setEventListeners();
   });
-
   const cardElement = card.createNewPlace();
-
-  if (position === "before") {
-    container.prepend(cardElement);
-  } else {
-    container.append(cardElement);
-  }
+  cardList.addItem(cardElement, position);
 }
 
-//item with values to create new card from popup
-const item = {
-  name: placePopupTitle.value,
-  link: placePopupLink.value,
-};
-
-// card edit pop-up submit function
-function submitCardHandler() {
-  renderPlace(cardsContainer, item, "before");
+//prepending new card after submitting
+function submitCardHandler(inputValues) {
+  renderPlace(inputValues, 'prepend');
 }
 
-//creating class example and setting event listeners
+//card adding popup
 const popupAddCard = new PopupWithForm(submitCardHandler, ".pop-up_type_place");
 popupAddCard.setEventListeners();
 
 newPlaceAdd.addEventListener("click", () => {
   popupAddCard.open();
+  addCardValidator.disableSubmitButton();
 });
 
-// indicating and linking arguments for user popup
+//getting user info fields
 const userInfo = new UserInfo({
   nameSelector: ".profile__name",
   bioSelector: ".profile__bio",
 });
 
+//editing profile
 function submitProfileHandler(inputValues) {
   userInfo.setUserInfo(inputValues.name, inputValues.bio);
 }
@@ -95,7 +87,7 @@ const popupEditProfile = new PopupWithForm(
 );
 popupEditProfile.setEventListeners();
 
-// submit function event listener for profile edit button
+//profile edit button listener
 popupEditBtn.addEventListener("click", () => {
   popupEditProfile.open();
 

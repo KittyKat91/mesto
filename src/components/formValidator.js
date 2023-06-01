@@ -62,16 +62,20 @@ export default class FormValidator {
       });
     });
   }
+
+  disableSubmitButton = () => {
+    this._submitButton.setAttribute("disabled", true); 
+    this._submitButton.classList.add(this.inactiveButtonClass);
+}
   //toggles button to active and inactive
 
-  _toggleButtonState = () => {
-    if (this._hasInvalidInput()) {
-      this._submitButton.setAttribute("disabled", true);
-      this._submitButton.classList.add(this._inactiveButtonClass);
-    } else {
-      this._submitButton.removeAttribute("disabled");
-      this._submitButton.classList.remove(this._inactiveButtonClass);
-    }
+  _toggleButtonState = () => { 
+    if (this._hasInvalidInput()) { 
+      this.disableSubmitButton(); 
+    } else { 
+      this._submitButton.removeAttribute("disabled"); 
+      this._submitButton.classList.remove(this._inactiveButtonClass); 
+    } 
   };
 
   //checks input status of all inputs

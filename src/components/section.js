@@ -5,7 +5,6 @@ export default class Section {
     this._container = document.querySelector(containerSelector);
     this._renderer = renderer;
     this._items = items;
-    
   }
 
   addItem(element, position = "append") {
@@ -19,11 +18,4 @@ export default class Section {
   renderItems() {
     this._items.forEach(this._renderer)
   }
-
-  // renderItems(items, renderer) {
-  //   items.forEach((item) => {
-  //     const renderedItem = renderer(item); // passing item as an argument to a renderer function
-  //     this.addItem(renderedItem);
-  //   });
-  // }
 }
