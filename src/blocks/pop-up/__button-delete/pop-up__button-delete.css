@@ -1,0 +1,36 @@
+.pop-up__button-delete{
+    background-color: #000;
+    color: #FFFFFF;
+    width: 358px;
+    max-height: 50px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    align-self: center;
+    border: none;
+    padding: 14px 125px 18px 125px;
+    margin: 6px 36px 36px 36px;
+    cursor: pointer;
+}
+
+@media (max-width: 800px){
+    .pop-up__button-delete{
+        max-height: 46px;
+        margin: 5px 22px 25px 22px;
+        padding: 14px 82px 14px 82px;
+    }
+}
+
+@media (max-width: 600px){
+    .pop-up__button-delete{
+        max-width: 238px;
+        
+    }
+}
+
+.pop-up__button-delete:hover {
+    opacity: 0.8;
+}

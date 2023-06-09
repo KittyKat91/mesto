@@ -12,4 +12,9 @@
     border: none;
     cursor: pointer;
     transition: opacity 0.4s linear;
+    visibility: visible;
+}
+
+.place__button-delete-hidden{
+    visibility: hidden;
 }

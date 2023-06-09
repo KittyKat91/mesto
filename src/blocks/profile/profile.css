@@ -6,7 +6,7 @@
     align-items: center;
     max-width: 880px;
     margin: 40px auto 51px auto;
-    z-index: 0;
+    z-index: 1;
 }
 
 @media (max-width:972px) {

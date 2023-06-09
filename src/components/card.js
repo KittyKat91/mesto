@@ -1,8 +1,14 @@
 export default class Card {
-  constructor(data, templateSelector, handleCardClick) {
+  constructor(data, templateSelector, handleCardClick, likePlace, dislikePlace) {
     this._link = data.link;
     this._name = data.name;
+    this._owner = data.owner;
+    this._id = data.id;
+    this._likes = data.likes;
+    this._userId = data.userId;
     this._handleCardClick = handleCardClick;
+    this._likePlace = likePlace;
+    this._dislikePlace = dislikePlace;
     this._template = document.querySelector(templateSelector).content;
   }
 
@@ -21,6 +27,14 @@ export default class Card {
     this._likeBtn = this._view.querySelector(".place__like-button");
     this._deleteBtn = this._view.querySelector(".place__button-delete");
     this._popupImgClose = this._view.querySelector(".pop-up__button-close");
+    this._imgLikeCount = this._view.querySelector(".place__like-count");
+
+    if (this._owner._id === this._userId) {
+      this._deleteBtn.classList.remove("place__button-delete-hidden")
+    }
+    this._imgLikeCount.textContent = this._likes.length;
+
+
 
     this._setEventListeners();
 
@@ -31,13 +45,28 @@ export default class Card {
     this._view.remove();
   }
 
+  _handleLikeClick(){
+    this._likeBtn.classList.toggle("place__like-button_active"); 
+
+    if (this._likeBtn.classList.contains("place__like-button_active")) {
+      this._likePlace(this._id, this._likes, this._likeCount);
+      this._likeBtn.classList.remove("place__like-button_active");
+    } else {
+      this._dislikePlace(this._id, this._likes, this._likeCount);
+      this._likeBtn.classList.add("place__like-button_active");
+    }
+  };
+
   _setEventListeners() {
-    this._deleteBtn.addEventListener("click", () => this._deletePlace());
+
+    if (this._owner.id === this._userId){
+      this._deleteBtn.addEventListener("click", () => this._deletePlace());}
+    
     this._image.addEventListener("click", () =>
       this._handleCardClick(this._link, this._name)
     );
-    this._likeBtn.addEventListener("click", () =>
-      this._likeBtn.classList.toggle("place__like-button_active")
-    );
+    this._likeBtn.addEventListener("click", () => this._handleLikeClick);
+
   }
 }
+
