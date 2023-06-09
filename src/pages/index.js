@@ -53,8 +53,7 @@ api.getInitialCards().then((cards) => {
   });
 });
 
-const popupRemovePlace = new PopupWithRemoval(".pop-up_place-delete", removePlace);
-popupRemovePlace.setEventListeners();
+
 
 //remove place function to remove place from server
 function removePlace (id, placeToRemove, submitBtn) {
@@ -70,12 +69,16 @@ function removePlace (id, placeToRemove, submitBtn) {
       .catch(console.err)
 }
 
-// remove place popup event listener
+//popupwithremoval class instance 
+const popupRemovePlace = new PopupWithRemoval(".pop-up_place-delete", removePlace);
+popupRemovePlace.setEventListeners();
+
+// remove place handler
 const handleRemovePlace = (evt, id) => {
   popupRemovePlace.open(evt.target.closest(".place"), id)
 }
 
-
+//remove place button event listener
 const removePlaceButton = document.querySelector(".place__button-delete");
 removePlaceButton.addEventListener("click", (evt) => {
   const placeElement = evt.target.closest(".place");
@@ -84,25 +87,27 @@ removePlaceButton.addEventListener("click", (evt) => {
 });
 
 //place like and unlike function
-function likePlace(id, likes, likeCount) {
-  return api
-    .likePlace(id)
-    .then((data) => {
-      likes = data.likes;
-      likeCount.textContent = likes.length;
-    })
-    .catch(console.error);
-}
+// function likePlace(id, likes, likeCount) {
+//    api
+//     .likePlace(id)
+//     .then((data) => {
+//       likes = data.likes;
+//       likeCount.textContent = likes.length;
+//     })
+//     .catch(console.error);
+// }
 
-function dislikePlace(id, likes, likeCount) {
-  return api
-    .dislikePlace(id)
-    .then((data) => {
-      likes = data.likes;
-      likeCount.textContent = likes.length;
-    })
-    .catch(console.error);
-}
+// function dislikePlace(id, likes, likeCount) {
+//    api
+//     .dislikePlace(id)
+//     .then((data) => {
+//       likes = data.likes;
+//       likeCount.textContent = likes.length;
+//     })
+//     .catch(console.error);
+// }
+
+
 
 //avatar edit handler function 
  const handleAvatarEdit = ({ 'profile__avatar': avatar }, submitBtn) => {
@@ -128,6 +133,8 @@ editAvatarBtn.addEventListener("click", () => {
 });
 
 
+
+
 //big img popup
 const popupImg = new PopupWithImage(".pop-up_type_image");
 popupImg.setEventListeners();
@@ -141,7 +148,6 @@ function renderPlace(data, cardList, position = "append") {
   cardList.addItem(cardElement, position);
   cardList.renderItems(); // Render the updated items
 }
-
 
 
 //form validators for user and card popup
