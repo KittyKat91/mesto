@@ -1,15 +1,22 @@
 export default class Api {
   constructor(options) {
+    console.log(options.url);
+    
     this._url = options.url;
     this._headers = options.headers;
     this._authorization = options.headers.authorization; //token
   }
 
+
+  
+
   _checkResStatus(res) {
+    console.log(res);
+
     if (res.ok) {
       return res.json();
     } else {
-      return Promise.reject(`Error: ${response.status} ${response.statusText}`);
+      return Promise.reject(`Error: ${res.status} ${res.statusText}`);
     }
   }
 
@@ -20,7 +27,7 @@ export default class Api {
     }).then(this._checkResStatus);
   }
 
-  addNewPlace(name, link) {
+  addNewPlace({name, link}) {
     return fetch(`https://mesto.nomoreparties.co/v1/cohort-68/cards`, {
       method: "POST",
       headers: this._headers,
@@ -31,7 +38,7 @@ export default class Api {
     });
   }
 
-  removePlace() {
+  removePlace(id) {
     return fetch(`${this._url}/cards/${id}`, {
       method: "DELETE",
       headers: this._headers,
@@ -70,6 +77,7 @@ export default class Api {
        body: JSON.stringify({
         name: "Kate Samsonadze",
         bio: "Ultra Runner",
+        about: "Ultra Runner",
       })
     })
       .then(this._checkResStatus);

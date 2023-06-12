@@ -54,6 +54,7 @@ const editAvatarForm = document.querySelector(".pop-up_type_avatar .pop-up__form
 const editAvatarBtn = document.querySelector(".profile__avatar-hover");
 const placesCard = document.querySelector(".places__cards");
 
+
 //cards to be loaded on the page
 const initialCards = [
   {
@@ -86,8 +87,10 @@ const loadWaiting = (btn, textValue) =>
   {btn.textContent = textValue};
 
 export {
+  initialCards,
   loadWaiting,
   editAvatarBtn,
+
   cardInputs,
   config,
   newPlaceAdd,
