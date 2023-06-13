@@ -10,7 +10,6 @@ import UserInfo from "../components/userinfo.js";
 import Api from "../components/api.js";
 
 import {
-  loadWaiting,
   config,
   newPlaceAdd,
   popupProfileName,
@@ -23,8 +22,8 @@ import {
   editAvatarForm,
   editAvatarBtn,
 } from "../utils/utils.js";
+import { data } from "autoprefixer";
 
-//Api part
 const api = new Api({
   url: "https://mesto.nomoreparties.co/v1/cohort-68",
   headers: {
@@ -32,24 +31,25 @@ const api = new Api({
     "content-type": "application/json",
   },
 });
+
 api.getUserData().then((data) => {
   console.dir(data);
 });
 
-//setting your own info into dom
 function fetchAndSetUserInfo(api, userInfo) {
   api
     .getUserData()
     .then((data) => {
-      const { name, about, avatar } = data;
+      const { name, about, avatar, _id } = data;
       userInfo.setUserInfo(name, about, avatar);
+      userInfo.setUserId(_id);
+      userInfo.setUserAvatar(avatar);
     })
     .catch((error) => {
       console.error("Error fetching user data:", error);
     });
 }
 
-//getting user info fields
 const userInfo = new UserInfo({
   nameSelector: ".profile__name",
   bioSelector: ".profile__bio",
@@ -58,7 +58,6 @@ const userInfo = new UserInfo({
 
 fetchAndSetUserInfo(api, userInfo);
 
-//creating initial cards from the server
 const cardList = new Section(
   {
     items: [],
@@ -75,107 +74,73 @@ api.getInitialCards().then((cards) => {
   });
 });
 
-//remove place function to remove place from server
-function removePlace(id, placeToRemove, submitBtn) {
-  loadWaiting(submitBtn, "Saving...");
+// remove place handler and event listener
+function removePlace(_id, placeToRemove, submitBtn) {
   return api
-    .removePlace(id)
+    .removePlace(_id)
     .then(() => {
       placeToRemove.remove();
       popupRemovePlace.close();
-    }, loadWaiting(submitBtn, "Yes"))
+    })
     .catch(console.err);
 }
 
-//popupwithremoval class instance
-const popupRemovePlace = new PopupWithRemoval(
-  ".pop-up_place-delete",
-  removePlace
-);
+const popupRemovePlace = new PopupWithRemoval(".pop-up_place-delete", removePlace);
 popupRemovePlace.setEventListeners();
 
-// remove place handler
-const handleRemovePlace = (evt, id) => {
-  popupRemovePlace.open(evt.target.closest(".place"), id);
+const handleRemovePlace = (evt, _id) => {
+  popupRemovePlace.open(evt.target.closest(".place"), _id);
 };
 
-// remove place button event listener
-const removePlaceButton = document.querySelector(".place__button-delete");
-removePlaceButton.addEventListener("click", (evt) => {
-  const placeElement = evt.target.closest(".place");
-  const placeId = placeElement.dataset.id;
-
-  handleRemovePlace(placeId);
-});
-
-// place like and unlike function
-function likePlace(id, likes, likeCount) {
+// like and dislike functions
+function likePlace(card) {
   api
-    .likePlace(id)
+    .likePlace(card._id)
     .then((data) => {
-      likes = data.likes;
-      likeCount.textContent = likes.length;
+      card._updateLikes(data.likes);
     })
     .catch(console.error);
 }
 
-function dislikePlace(id, likes, likeCount) {
+function dislikePlace(card) {
   api
-    .dislikePlace(id)
+    .dislikePlace(card._id)
     .then((data) => {
-      likes = data.likes;
-      likeCount.textContent = likes.length;
+      card._updateLikes(data.likes);
     })
     .catch(console.error);
 }
 
-const avatar = document.querySelector(".profile__avatar");
-
-//avatar edit handler function
-const handleAvatarEdit = (avatar, submitBtn) => {
-  loadWaiting(submitBtn, "Saving...");
-  api
-    .editUserAvatar(avatar)
-    .then((outcome) => {
-      userInfo.setUserInfo(outcome);
-      loadWaiting(submitBtn, "Сохранить");
-      editAvatarPopup.close();
-    })
-    .catch(console.error);
-};
-
-//avatar edit popup and functions
-const editAvatarPopup = new PopupWithForm(
-  handleAvatarEdit,
-  ".pop-up_type_avatar"
-);
-editAvatarPopup.setEventListeners();
-
-editAvatarBtn.addEventListener("click", () => {
-  editAvatarPopup.open();
-  editAvatarValidator.disableSubmitButton();
-  handleAvatarEdit(avatar, submitBtn);
-});
-
-//big img popup
 const popupImg = new PopupWithImage(".pop-up_type_image");
 popupImg.setEventListeners();
 
 function renderPlace(data, cardList, position = "append") {
+  const userId = userInfo.getUserId();
+
   const card = new Card(
     data,
     "#place__template",
     { likePlace, dislikePlace },
     (link, name) => {
       popupImg.open({ name, link });
-    }
+    },
+    userId
   );
+
   const cardElement = card.createNewPlace();
   cardList.addItem(cardElement, position);
-  cardList.renderItems(); // Render the updated items
+  cardList.renderItems();
+
+  const removePlaceButton = cardElement.querySelector(".place__button-delete");
+  removePlaceButton.addEventListener("click", (evt) => {
+    const placeElement = evt.target.closest(".place");
+    const placeId = placeElement.dataset._id;
+
+    handleRemovePlace(placeId);
+  });
 }
 
-//form validators for user and card popup
+// validators
 const editProfileValidator = new FormValidator(config, editProfileForm);
 const addCardValidator = new FormValidator(config, addCardForm);
 const editAvatarValidator = new FormValidator(config, editAvatarForm);
@@ -184,7 +149,8 @@ editProfileValidator.enableValidation();
 addCardValidator.enableValidation();
 editAvatarValidator.enableValidation();
 
-//prepending new card after submitting
+
+// new card submit handler, form and event listener
 function submitCardHandler(data) {
   api
     .addNewPlace({ name: data.title, link: data.url })
@@ -196,7 +162,6 @@ function submitCardHandler(data) {
     });
 }
 
-//card adding popup
 const popupAddCard = new PopupWithForm(submitCardHandler, ".pop-up_type_place");
 popupAddCard.setEventListeners();
 
@@ -205,22 +170,48 @@ newPlaceAdd.addEventListener("click", () => {
   addCardValidator.disableSubmitButton();
 });
 
-//editing profile
+// profile info handler, form and event listeners
 function submitProfileHandler(inputValues) {
   userInfo.setUserInfo(inputValues.name, inputValues.bio);
+  api
+    .setUserData(inputValues.name, inputValues.bio)
+    .then((outcome) => {
+      userInfo.setUserInfo(outcome.userInfoData)
+    })
+    .catch((error) => {
+      console.error(error);
+    })
 }
 
-const popupEditProfile = new PopupWithForm(
-  submitProfileHandler,
-  ".pop-up_type_user"
-);
+const popupEditProfile = new PopupWithForm(submitProfileHandler, ".pop-up_type_user");
 popupEditProfile.setEventListeners();
 
-//profile edit button listener
 popupEditBtn.addEventListener("click", () => {
   popupEditProfile.open();
 
   const userInfoData = userInfo.getUserInfo();
   popupProfileName.value = userInfoData.name;
   popupProfileBio.value = userInfoData.bio;
+
 });
+
+// avatar functions
+const handleAvatarEdit = (data) => {
+    api
+    .editUserAvatar(avatar)
+    .then((outcome) => {
+      userInfo.setUserInfo(outcome.name, outcome.bio, outcome.avatar);
+      editAvatarPopup.close();
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
+
+const editAvatarPopup = new PopupWithForm(handleAvatarEdit, ".pop-up_type_avatar");
+editAvatarPopup.setEventListeners();
+
+editAvatarBtn.addEventListener("click", () => {
+  editAvatarPopup.open();
+});
+

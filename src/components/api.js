@@ -1,19 +1,12 @@
 export default class Api {
   constructor(options) {
-    console.log(options.url);
-    
     this._url = options.url;
     this._headers = options.headers;
     this._authorization = options.headers.authorization; //token
   }
 
-
-  
-
   _checkResStatus(res) {
-    console.log(res);
-
-    if (res.ok) {
+      if (res.ok) {
       return res.json();
     } else {
       return Promise.reject(`Error: ${res.status} ${res.statusText}`);
@@ -38,7 +31,7 @@ export default class Api {
     });
   }
 
-  removePlace(id) {
+  removePlace(_id) {
     return fetch(`${this._url}/cards/${id}`, {
       method: "DELETE",
       headers: this._headers,
@@ -75,10 +68,10 @@ export default class Api {
             "Content-Type" : "application/json"
         },
        body: JSON.stringify({
-        name: "Kate Samsonadze",
-        bio: "Ultra Runner",
-        about: "Ultra Runner",
-      })
+      name: data.name,
+      bio: data.bio,
+      about: data.about,
+    })
     })
       .then(this._checkResStatus);
   }

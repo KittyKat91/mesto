@@ -38,6 +38,7 @@ const formNewPlaceSubmitButton = formNewPlace.querySelector(
 const placePopupTitle = document.querySelector(".pop-up__field-title");
 const placePopupLink = document.querySelector(".pop-up__field-link");
 const popupProfileName = document.querySelector(".pop-up__field-name");
+const popupProfileAvatar = document.querySelector(".pop-up__field-link")
 const popupProfileBio = document.querySelector(".pop-up__field-bio");
 const editedProfileName = document.querySelector(".profile__name");
 const editedProfileBio = document.querySelector(".profile__bio");
@@ -53,6 +54,8 @@ const editProfileForm = document.querySelector(
 const editAvatarForm = document.querySelector(".pop-up_type_avatar .pop-up__form");
 const editAvatarBtn = document.querySelector(".profile__avatar-hover");
 const placesCard = document.querySelector(".places__cards");
+const placeBtnSubmit = document.querySelector(".pop-up__button-submit");
+
 
 
 //cards to be loaded on the page
@@ -83,14 +86,13 @@ const initialCards = [
   },
 ];
 
-const loadWaiting = (btn, textValue) => 
-  {btn.textContent = textValue};
+
 
 export {
   initialCards,
-  loadWaiting,
+  // loadWaiting,
   editAvatarBtn,
-
+  placeBtnSubmit,
   cardInputs,
   config,
   newPlaceAdd,
