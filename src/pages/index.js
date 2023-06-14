@@ -17,12 +17,13 @@ import {
   popupEditBtn,
   addCardForm,
   editProfileForm,
+  btnDeleteSubmit,
   initialCards,
   editedProfileAvatar,
   editAvatarForm,
   editAvatarBtn,
 } from "../utils/utils.js";
-import { data } from "autoprefixer";
+
 
 const api = new Api({
   url: "https://mesto.nomoreparties.co/v1/cohort-68",
@@ -43,7 +44,6 @@ function fetchAndSetUserInfo(api, userInfo) {
       const { name, about, avatar, _id } = data;
       userInfo.setUserInfo(name, about, avatar);
       userInfo.setUserId(_id);
-      userInfo.setUserAvatar(avatar);
     })
     .catch((error) => {
       console.error("Error fetching user data:", error);
@@ -56,7 +56,9 @@ const userInfo = new UserInfo({
   avatarSelector: ".profile__avatar",
 });
 
+
 fetchAndSetUserInfo(api, userInfo);
+console.log(api);
 
 const cardList = new Section(
   {
@@ -75,22 +77,22 @@ api.getInitialCards().then((cards) => {
 });
 
 // remove place handler and event listener
-function removePlace(_id, placeToRemove, submitBtn) {
-  return api
-    .removePlace(_id)
-    .then(() => {
-      placeToRemove.remove();
-      popupRemovePlace.close();
-    })
-    .catch(console.err);
-}
+// function removePlace(placeToRemove, handleRemovePlace) {
+//   return api
+//     .removePlace(_id)
+//     .then(() => {
+//       placeToRemove.remove();
+//       popupRemovePlace.close();
+//     })
+//     .catch(console.err);
+// }
 
-const popupRemovePlace = new PopupWithRemoval(".pop-up_place-delete", removePlace);
-popupRemovePlace.setEventListeners();
+// const popupRemovePlace = new PopupWithRemoval(removePlace, ".pop-up_place-delete");
+// popupRemovePlace.setEventListeners();
 
-const handleRemovePlace = (evt, _id) => {
-  popupRemovePlace.open(evt.target.closest(".place"), _id);
-};
+// const handleRemovePlace = (evt, _id) => {
+//   popupRemovePlace.open(evt.target.closest(".place"), _id);
+// };
 
 // like and dislike functions
 function likePlace(card) {
@@ -197,16 +199,19 @@ popupEditBtn.addEventListener("click", () => {
 
 // avatar functions
 const handleAvatarEdit = (data) => {
-    api
-    .editUserAvatar(avatar)
-    .then((outcome) => {
-      userInfo.setUserInfo(outcome.name, outcome.bio, outcome.avatar);
+  const link = data.avatar; 
+
+  api
+    .editUserAvatar({ link })
+    .then((res) => {
+      userInfo.setUserInfo(res);
       editAvatarPopup.close();
     })
     .catch((error) => {
       console.error(error);
     });
 };
+
 
 const editAvatarPopup = new PopupWithForm(handleAvatarEdit, ".pop-up_type_avatar");
 editAvatarPopup.setEventListeners();

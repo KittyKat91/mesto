@@ -1,5 +1,7 @@
 export default class Api {
   constructor(options) {
+    console.log(options.headers);
+    
     this._url = options.url;
     this._headers = options.headers;
     this._authorization = options.headers.authorization; //token
@@ -32,7 +34,7 @@ export default class Api {
   }
 
   removePlace(_id) {
-    return fetch(`${this._url}/cards/${id}`, {
+    return fetch(`${this._url}/cards/${_id}`, {
       method: "DELETE",
       headers: this._headers,
     }).then(this._checkResStatus);
@@ -77,11 +79,16 @@ export default class Api {
   }
 
 //changing initial avatar
-  editUserAvatar(avatar) { 
-    return fetch(`https://mesto.nomoreparties.co/v1/cohort-68/users/me/avatar`, {
-        method: "PATCH",
-        headers: this._headers,
-        body: JSON.stringify({avatar}),
-      }).then(this._checkResStatus);
-  }
+editUserAvatar(avatar) { 
+  return fetch(`https://mesto.nomoreparties.co/v1/cohort-68/users/me/avatar`, {
+      method: "PATCH",
+      headers: {
+        authorization: this._authorization,
+        "Content-Type" : "application/json"
+      },
+        
+      body: JSON.stringify({ avatar 
+      }), 
+    }).then(this._checkResStatus);
+}
 }

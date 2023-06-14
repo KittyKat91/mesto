@@ -55,7 +55,7 @@ const editAvatarForm = document.querySelector(".pop-up_type_avatar .pop-up__form
 const editAvatarBtn = document.querySelector(".profile__avatar-hover");
 const placesCard = document.querySelector(".places__cards");
 const placeBtnSubmit = document.querySelector(".pop-up__button-submit");
-
+const btnDeleteSubmit = document.querySelector(".pop-up__button-delete");
 
 
 //cards to be loaded on the page
@@ -90,7 +90,7 @@ const initialCards = [
 
 export {
   initialCards,
-  // loadWaiting,
+  btnDeleteSubmit,
   editAvatarBtn,
   placeBtnSubmit,
   cardInputs,

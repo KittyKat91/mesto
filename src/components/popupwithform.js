@@ -21,7 +21,10 @@ export default class PopupWithForm extends Popup {
     });
 
     return formInputs;
+
   }
+
+  
   async handleSubmit(evt) {
     evt.preventDefault();
     const initialText = this._submitBtn.textContent;
@@ -29,7 +32,7 @@ export default class PopupWithForm extends Popup {
     try {
       this._submitBtn.textContent = "Сохранение...";
       await new Promise((resolve) => {
-        setTimeout(resolve, 2000);
+        setTimeout(resolve, 500);
       });
       await this._handleSubmit(this._getInputValues());
       this.close(); 
