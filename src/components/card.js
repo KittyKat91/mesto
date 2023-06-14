@@ -1,12 +1,13 @@
 
 export default class Card {
-  constructor(data, templateSelector, { likePlace, dislikePlace, updateLikesCallback }, handleCardClick) {
+  constructor(data, templateSelector, { likePlace, dislikePlace, updateLikesCallback }, handleCardClick, userId) {
     this._link = data.link;
     this._name = data.name;
     this._owner = data.owner;
     this._id = data._id;
-    this._likes = data.likes;
-    this._userId = data.userId;
+       
+    this._likes = data.likes;   
+    this.userId = userId;
     this._handleCardClick = handleCardClick;
     this._likePlace = likePlace;
     this._dislikePlace = dislikePlace;
@@ -30,8 +31,10 @@ export default class Card {
     this._deleteBtn = this._view.querySelector('.place__button-delete');
     this._popupImgClose = this._view.querySelector('.pop-up__button-close');
     this._likeCount = this._view.querySelector('.place__like-count');
+    console.log(this._owner._id, this.userId);
+    
 
-    if (this._owner._id === this._userId) {
+    if (this._owner._id === this.userId) {
       this._deleteBtn.classList.remove('place__button-delete-hidden');
     }
 
@@ -57,8 +60,6 @@ export default class Card {
       this._dislikePlace(this);
     }
   }
-  
-
 
   _setEventListeners() {
     if (this._owner.id === this._userId) {

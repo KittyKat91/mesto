@@ -13,13 +13,15 @@ export default class UserInfo {
       name: this._nameElement.textContent,
       bio: this._bioElement.textContent,
       avatar: this._avatarSelector.src,
-      userId: this._avatarSelector.src,
+      
+      
+      userId: this.userID,
     };
   }
 
-  setUserInfo( name, bio, avatar ) {
+  setUserInfo( {name, about, avatar} ) {
     this._nameElement.textContent = name;
-    this._bioElement.textContent = bio;
+    this._bioElement.textContent = about;
     this._avatarSelector.src = avatar;
   }
 

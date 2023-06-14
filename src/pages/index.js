@@ -42,7 +42,7 @@ function fetchAndSetUserInfo(api, userInfo) {
     .getUserData()
     .then((data) => {
       const { name, about, avatar, _id } = data;
-      userInfo.setUserInfo(name, about, avatar);
+      userInfo.setUserInfo({name, about, avatar});
       userInfo.setUserId(_id);
     })
     .catch((error) => {
@@ -76,23 +76,27 @@ api.getInitialCards().then((cards) => {
   });
 });
 
+const popupRemovePlace = new PopupWithRemoval(removePlace, ".pop-up_place-delete");
+popupRemovePlace.setEventListeners();
+
+const handleRemovePlace = (evt, _id) => {
+  popupRemovePlace.open(evt.target.closest(".place"), _id);
+};
+
 // remove place handler and event listener
-// function removePlace(placeToRemove, handleRemovePlace) {
-//   return api
-//     .removePlace(_id)
-//     .then(() => {
-//       placeToRemove.remove();
-//       popupRemovePlace.close();
-//     })
-//     .catch(console.err);
-// }
+function removePlace(placeToRemove, handleRemovePlace) {
+  return api
+    .removePlace(_id)
+    .then(() => {
+      placeToRemove.remove();
+      popupRemovePlace.close();
+    })
+    .catch(console.err);
+}
 
-// const popupRemovePlace = new PopupWithRemoval(removePlace, ".pop-up_place-delete");
-// popupRemovePlace.setEventListeners();
 
-// const handleRemovePlace = (evt, _id) => {
-//   popupRemovePlace.open(evt.target.closest(".place"), _id);
-// };
+
+
 
 // like and dislike functions
 function likePlace(card) {
@@ -199,10 +203,12 @@ popupEditBtn.addEventListener("click", () => {
 
 // avatar functions
 const handleAvatarEdit = (data) => {
-  const link = data.avatar; 
+  console.log(data);
+  
+  const link = data.url; 
 
   api
-    .editUserAvatar({ link })
+    .editUserAvatar(link)
     .then((res) => {
       userInfo.setUserInfo(res);
       editAvatarPopup.close();
