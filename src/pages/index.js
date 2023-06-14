@@ -24,7 +24,6 @@ import {
   editAvatarBtn,
 } from "../utils/utils.js";
 
-
 const api = new Api({
   url: "https://mesto.nomoreparties.co/v1/cohort-68",
   headers: {
@@ -42,7 +41,7 @@ function fetchAndSetUserInfo(api, userInfo) {
     .getUserData()
     .then((data) => {
       const { name, about, avatar, _id } = data;
-      userInfo.setUserInfo({name, about, avatar});
+      userInfo.setUserInfo({ name, about, avatar });
       userInfo.setUserId(_id);
     })
     .catch((error) => {
@@ -56,9 +55,7 @@ const userInfo = new UserInfo({
   avatarSelector: ".profile__avatar",
 });
 
-
 fetchAndSetUserInfo(api, userInfo);
-console.log(api);
 
 const cardList = new Section(
   {
@@ -76,27 +73,24 @@ api.getInitialCards().then((cards) => {
   });
 });
 
-const popupRemovePlace = new PopupWithRemoval(removePlace, ".pop-up_place-delete");
+const popupRemovePlace = new PopupWithRemoval(".pop-up_place-delete");
 popupRemovePlace.setEventListeners();
 
-const handleRemovePlace = (evt, _id) => {
-  popupRemovePlace.open(evt.target.closest(".place"), _id);
+const handleRemovePlace = (card) => {
+  popupRemovePlace.setDeleteAction(() => {
+    api
+      .removePlace(card._id)
+      .then((res) => {
+        card.deleteCard();
+        console.log(res);
+        popupRemovePlace.close();
+      })
+      .catch(() => {
+        console.log("Ошибка удаления");
+      });
+  });
+  popupRemovePlace.open();
 };
-
-// remove place handler and event listener
-function removePlace(placeToRemove, handleRemovePlace) {
-  return api
-    .removePlace(_id)
-    .then(() => {
-      placeToRemove.remove();
-      popupRemovePlace.close();
-    })
-    .catch(console.err);
-}
-
-
-
-
 
 // like and dislike functions
 function likePlace(card) {
@@ -126,7 +120,7 @@ function renderPlace(data, cardList, position = "append") {
   const card = new Card(
     data,
     "#place__template",
-    { likePlace, dislikePlace },
+    { likePlace, dislikePlace, deletePlace: handleRemovePlace },
     (link, name) => {
       popupImg.open({ name, link });
     },
@@ -137,13 +131,6 @@ function renderPlace(data, cardList, position = "append") {
   cardList.addItem(cardElement, position);
   cardList.renderItems();
 
-  const removePlaceButton = cardElement.querySelector(".place__button-delete");
-  removePlaceButton.addEventListener("click", (evt) => {
-    const placeElement = evt.target.closest(".place");
-    const placeId = placeElement.dataset._id;
-
-    handleRemovePlace(placeId);
-  });
 }
 
 // validators
@@ -154,7 +141,6 @@ const editAvatarValidator = new FormValidator(config, editAvatarForm);
 editProfileValidator.enableValidation();
 addCardValidator.enableValidation();
 editAvatarValidator.enableValidation();
-
 
 // new card submit handler, form and event listener
 function submitCardHandler(data) {
@@ -178,18 +164,20 @@ newPlaceAdd.addEventListener("click", () => {
 
 // profile info handler, form and event listeners
 function submitProfileHandler(inputValues) {
-  userInfo.setUserInfo(inputValues.name, inputValues.bio);
   api
-    .setUserData(inputValues.name, inputValues.bio)
+    .setUserData({ name: inputValues.name, about: inputValues.bio })
     .then((outcome) => {
-      userInfo.setUserInfo(outcome.userInfoData)
+      userInfo.setUserInfo(outcome);
     })
     .catch((error) => {
       console.error(error);
-    })
+    });
 }
 
-const popupEditProfile = new PopupWithForm(submitProfileHandler, ".pop-up_type_user");
+const popupEditProfile = new PopupWithForm(
+  submitProfileHandler,
+  ".pop-up_type_user"
+);
 popupEditProfile.setEventListeners();
 
 popupEditBtn.addEventListener("click", () => {
@@ -198,14 +186,13 @@ popupEditBtn.addEventListener("click", () => {
   const userInfoData = userInfo.getUserInfo();
   popupProfileName.value = userInfoData.name;
   popupProfileBio.value = userInfoData.bio;
-
 });
 
 // avatar functions
 const handleAvatarEdit = (data) => {
   console.log(data);
-  
-  const link = data.url; 
+
+  const link = data.url;
 
   api
     .editUserAvatar(link)
@@ -218,11 +205,12 @@ const handleAvatarEdit = (data) => {
     });
 };
 
-
-const editAvatarPopup = new PopupWithForm(handleAvatarEdit, ".pop-up_type_avatar");
+const editAvatarPopup = new PopupWithForm(
+  handleAvatarEdit,
+  ".pop-up_type_avatar"
+);
 editAvatarPopup.setEventListeners();
 
 editAvatarBtn.addEventListener("click", () => {
   editAvatarPopup.open();
 });
-

@@ -1,7 +1,7 @@
 // should only draw the card elements, doesn't have it's own layout, only receives the template array and draws it into DOM
 
 export default class Section {
-  constructor( {items, renderer}, containerSelector) {
+  constructor({ items, renderer }, containerSelector) {
     this._container = document.querySelector(containerSelector);
     this._renderer = renderer;
     this._items = items;

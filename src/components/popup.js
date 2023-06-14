@@ -15,7 +15,7 @@ export default class Popup {
     window.removeEventListener("keydown", this._handleKeyUpEscape);
   }
 
-  _handleKeyUpEscape(evt){
+  _handleKeyUpEscape(evt) {
     if (evt.key === "Escape") this.close();
   };
 
