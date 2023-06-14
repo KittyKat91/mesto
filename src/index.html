@@ -15,7 +15,7 @@
         <main class="main">
             <section class="profile">  
                 <div class="profile__main">        
-                    <img class="profile__avatar" src="" alt="Кусто">
+                    <img class="profile__avatar" src="#" alt="Кусто">
                     <span class="profile__avatar-hover"></span>
                     <div class="profile__editable">
                         <div class="profile__info">
@@ -53,9 +53,9 @@
         </div>
         <div class="pop-up pop-up_type_avatar">
             <div class="pop-up__container">
-                <button class="button pop-up__button-close" id="pop-up__user-close" type="button" ></button>
+                <button class="button pop-up__button-close" id="pop-up__user" type="button" ></button>
                 <h2 class="pop-up__title">Обновить аватар</h2>
-                <form class="pop-up__form pop-up__submitform" id="submitform" name="submitform" novalidate>
+                <form class="pop-up__form pop-up__submitform" id="submitfrm" name="submitform" novalidate>
                     <fieldset class="pop-up__form-fieldset">
                         <input class="pop-up__field pop-up__field-link" id="url" required type="url" placeholder="Ссылка на аватарку">
                         <span class="pop-up__field-error url-error"></span>
@@ -73,7 +73,7 @@
                     <fieldset class="pop-up__form-fieldset">
                         <input class="pop-up__field pop-up__field-title" id="title" required type="text" placeholder="Название" minlength="2" maxlength="40">
                         <span class="pop-up__field-error title-error"></span>
-                        <input class="pop-up__field pop-up__field-link" id="url" required type="url" placeholder="Ссылка на картинку">
+                        <input class="pop-up__field pop-up__field-link" id="urllink" required type="url" placeholder="Ссылка на картинку">
                         <span class="pop-up__field-error url-error"></span>
                         <button class="button pop-up__button-submit" type="submit">Создать</button>
                     </fieldset>
