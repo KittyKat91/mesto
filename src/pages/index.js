@@ -32,30 +32,6 @@ const api = new Api({
   },
 });
 
-api.getUserData().then((data) => {
-  console.dir(data);
-});
-
-function fetchAndSetUserInfo(api, userInfo) {
-  api
-    .getUserData()
-    .then((data) => {
-      const { name, about, avatar, _id } = data;
-      userInfo.setUserInfo({ name, about, avatar });
-      userInfo.setUserId(_id);
-    })
-    .catch((error) => {
-      console.error("Error fetching user data:", error);
-    });
-}
-
-const userInfo = new UserInfo({
-  nameSelector: ".profile__name",
-  bioSelector: ".profile__bio",
-  avatarSelector: ".profile__avatar",
-});
-
-fetchAndSetUserInfo(api, userInfo);
 
 const cardList = new Section(
   {
@@ -67,11 +43,14 @@ const cardList = new Section(
   ".places__cards"
 );
 
-api.getInitialCards().then((cards) => {
-  cards.forEach((card) => {
-    renderPlace(card, cardList);
-  });
+
+const userInfo = new UserInfo({
+  nameSelector: ".profile__name",
+  bioSelector: ".profile__bio",
+  avatarSelector: ".profile__avatar",
 });
+
+// fetchAndSetUserInfo(api, userInfo);
 
 const popupRemovePlace = new PopupWithRemoval(".pop-up_place-delete");
 popupRemovePlace.setEventListeners();
@@ -97,7 +76,7 @@ function likePlace(card) {
   api
     .likePlace(card._id)
     .then((data) => {
-      card._updateLikes(data.likes);
+      card.updateLikes(data.likes);
     })
     .catch(console.error);
 }
@@ -106,7 +85,7 @@ function dislikePlace(card) {
   api
     .dislikePlace(card._id)
     .then((data) => {
-      card._updateLikes(data.likes);
+      card.updateLikes(data.likes);
     })
     .catch(console.error);
 }
@@ -146,10 +125,7 @@ editAvatarValidator.enableValidation();
 function submitCardHandler(data) {
   api
     .addNewPlace({ name: data.title, link: data.url })
-    .then((res) => res.json())
     .then((body) => {
-      console.log(body);
-
       renderPlace(body, cardList, "prepend");
     });
 }
@@ -214,3 +190,37 @@ editAvatarPopup.setEventListeners();
 editAvatarBtn.addEventListener("click", () => {
   editAvatarPopup.open();
 });
+
+Promise.all([api.getUserData(),api.getInitialCards()])
+.then(([userData,initialCards]) => {
+  console.log(userData);
+  
+  const {name, about, avatar, _id } = userData;
+  userInfo.setUserInfo({ name, about, avatar });
+  userInfo.setUserId(_id);
+
+  initialCards.forEach((card) => {
+    renderPlace(card, cardList);
+  })
+})
+.catch((err) => console.log(err))
+ 
+
+// WILL ERASE AFTER THE REVIEW
+
+// api.getUserData().then((data) => {
+//   console.dir(data);
+// });
+
+// function fetchAndSetUserInfo(api, userInfo) {
+//   api
+//     .getUserData()
+//     .then((data) => {
+//       const { name, about, avatar, _id } = data;
+//       userInfo.setUserInfo({ name, about, avatar });
+//       userInfo.setUserId(_id);
+//     })
+//     .catch((error) => {
+//       console.error("Error fetching user data:", error);
+//     });
+// }

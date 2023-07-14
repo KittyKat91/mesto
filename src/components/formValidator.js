@@ -17,9 +17,14 @@ export default class FormValidator {
 
   _showInputError = (inputElement, errorMessage) => {
     //looking for error input
+    console.log(inputElement);
+    
+    
     const errorElement = this._form.querySelector(`.${inputElement.id}-error`);
+    console.log(errorElement);
     errorElement.textContent = errorMessage;
     errorElement.classList.add(this._inputErrorVisible, this._inputInvalid);
+    
   };
 
   // hides error message

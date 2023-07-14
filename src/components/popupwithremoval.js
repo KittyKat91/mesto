@@ -4,7 +4,6 @@ export default class PopupWithRemoval extends Popup {
   constructor(popupSelector, removePlace) {
     super(popupSelector);
     this._removePlace = removePlace;
-    console.log(this._yesBtn);
     this._yesBtn = this._popup.querySelector('.pop-up__button-delete');
     this._placeToRemove = null;
     this._identifier = null;

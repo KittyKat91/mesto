@@ -1,13 +1,12 @@
 export default class Api {
   constructor(options) {
-    console.log(options.headers);
-
     this._url = options.url;
     this._headers = options.headers;
     this._authorization = options.headers.authorization; //token
   }
 
   _checkResStatus(res) {
+       
     if (res.ok) {
       return res.json();
     } else {
@@ -30,7 +29,8 @@ export default class Api {
         name,
         link,
       }),
-    });
+    })
+   .then(this._checkResStatus);
   }
 
   removePlace(_id) {
