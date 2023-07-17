@@ -15,14 +15,14 @@ export default class Api {
   }
 
   getInitialCards() {
-    return fetch(`https://mesto.nomoreparties.co/v1/cohort-68/cards`, {
+    return fetch(`${this._url}/cards`, {
       method: "GET",
       headers: this._headers,
     }).then(this._checkResStatus);
   }
 
   addNewPlace({ name, link }) {
-    return fetch(`https://mesto.nomoreparties.co/v1/cohort-68/cards`, {
+    return fetch(`${this._url}/cards`, {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({

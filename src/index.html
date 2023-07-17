@@ -15,8 +15,12 @@
         <main class="main">
             <section class="profile">  
                 <div class="profile__main">        
+                    <!-- <img class="profile__avatar" src="#" alt="Кусто">
+                    <span class="profile__avatar-hover"></span> -->
+                    <div class="profile__avatar-container">
                     <img class="profile__avatar" src="#" alt="Кусто">
                     <span class="profile__avatar-hover"></span>
+                </div>
                     <div class="profile__editable">
                         <div class="profile__info">
                             <h1 class="profile__name"></h1>
@@ -42,9 +46,9 @@
                 <h2 class="pop-up__title">Редактировать профиль</h2>
                 <form class="pop-up__form pop-up__submitform" id="submitform" name="submitform" novalidate>
                     <fieldset class="pop-up__form-fieldset">
-                        <input required class="pop-up__field pop-up__field-name" id="name" type="text" placeholder="Имя" minlength="2" maxlength="40">
+                        <input required class="pop-up__field pop-up__field-name" id="name" name="name" type="text" placeholder="Имя" minlength="2" maxlength="40">
                         <span class="pop-up__field-error name-error"></span>
-                        <input required class="pop-up__field pop-up__field-bio" id="bio" type="text" placeholder="Профиль" minlength="2" maxlength="200">
+                        <input required class="pop-up__field pop-up__field-bio" name="bio" id="bio" type="text" placeholder="Профиль" minlength="2" maxlength="200">
                         <span class="pop-up__field-error bio-error" id="pop-up__field-error"></span>
                         <button class="button pop-up__button-submit" type="submit">Сохранить</button>
                     </fieldset>
@@ -57,8 +61,8 @@
                 <h2 class="pop-up__title">Обновить аватар</h2>
                 <form class="pop-up__form pop-up__submitform" id="submitfrm" name="submitform" novalidate>
                     <fieldset class="pop-up__form-fieldset">
-                        <input class="pop-up__field pop-up__field-link" id="url" required type="url" placeholder="Ссылка на аватарку">
-                        <span class="pop-up__field-error url-error"></span>
+                        <input class="pop-up__field pop-up__field-link" name="link" required type="url" placeholder="Ссылка на аватарку">
+                        <span class="pop-up__field-error url-error link-error"></span>
                         <button class="button pop-up__button-submit" type="submit">Сохранить</button>
                     </fieldset>
                 </form>
@@ -71,10 +75,10 @@
                 <h2 class="pop-up__title">Новое место</h2>
                 <form class="pop-up__form pop-up__form_type_addplace" id="addplace" name="addplace" novalidate> 
                     <fieldset class="pop-up__form-fieldset">
-                        <input class="pop-up__field pop-up__field-title" id="title" required type="text" placeholder="Название" minlength="2" maxlength="40">
+                        <input class="pop-up__field pop-up__field-title" name="title" id="title" required type="text" placeholder="Название" minlength="2" maxlength="40">
                         <span class="pop-up__field-error title-error"></span>
-                        <input class="pop-up__field pop-up__field-link" id="urllink" required type="url" placeholder="Ссылка на картинку">
-                        <span class="pop-up__field-error url-error"></span>
+                        <input class="pop-up__field pop-up__field-link" name="urllink" required type="url" placeholder="Ссылка на картинку">
+                        <span class="pop-up__field-error url-error urllink-error" ></span>
                         <button class="button pop-up__button-submit" type="submit">Создать</button>
                     </fieldset>
                 </form>

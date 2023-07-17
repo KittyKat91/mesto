@@ -40,9 +40,8 @@ export default class Card {
     if (this._owner._id === this.userId) {
       this._deleteBtn.classList.remove("place__button-delete-hidden");
     }
-    if(this._likes.length > 0) {
-      const liked = this._likes.find(like => like._id === this.userId)
-      if (liked) this._likeBtn.classList.add("place__like-button_active");
+    if (this._likes.find(like => like._id === this.userId)) {
+      this._likeBtn.classList.add("place__like-button_active");
     }
     
     this._likeCount.textContent = this._likes.length;
@@ -55,21 +54,24 @@ export default class Card {
   }
 
   updateLikes(likes) {
+    this._likes = likes;
     this._likeCount.textContent = likes.length;
   }
 
-  _handleLikeClick() {
+  toggleLikeButton() {
+    this._likeBtn.classList.toggle("place__like-button_active");
+  }
+
+  handleLikeClick() {
     if (this._likeBtn.classList.contains("place__like-button_active")) {
       this._dislikePlace(this);
     } else {
       this._likePlace(this);
     }
-
-    this._likeBtn.classList.toggle("place__like-button_active");
   }
 
   _setEventListeners() {
-    if (this._owner.id === this._userId) {
+    if (this._owner._id === this.userId) {
       this._deleteBtn.addEventListener("click", () => {
         this._deletePlace(this);
       });
@@ -78,6 +80,6 @@ export default class Card {
     this._image.addEventListener("click", () =>
       this._handleCardClick(this._link, this._name)
     );
-    this._likeBtn.addEventListener("click", () => this._handleLikeClick());
+    this._likeBtn.addEventListener("click", () => this.handleLikeClick());
   }
 }

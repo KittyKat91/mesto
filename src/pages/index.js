@@ -72,10 +72,12 @@ const handleRemovePlace = (card) => {
 };
 
 // like and dislike functions
+
 function likePlace(card) {
   api
     .likePlace(card._id)
     .then((data) => {
+      card.toggleLikeButton();
       card.updateLikes(data.likes);
     })
     .catch(console.error);
@@ -85,6 +87,7 @@ function dislikePlace(card) {
   api
     .dislikePlace(card._id)
     .then((data) => {
+      card.toggleLikeButton();
       card.updateLikes(data.likes);
     })
     .catch(console.error);
@@ -124,7 +127,7 @@ editAvatarValidator.enableValidation();
 // new card submit handler, form and event listener
 function submitCardHandler(data) {
   api
-    .addNewPlace({ name: data.title, link: data.url })
+    .addNewPlace({ name: data.title, link: data.urllink })
     .then((body) => {
       renderPlace(body, cardList, "prepend");
     });
@@ -166,9 +169,7 @@ popupEditBtn.addEventListener("click", () => {
 
 // avatar functions
 const handleAvatarEdit = (data) => {
-  console.log(data);
-
-  const link = data.url;
+   const link = data.link;
 
   api
     .editUserAvatar(link)
@@ -191,19 +192,38 @@ editAvatarBtn.addEventListener("click", () => {
   editAvatarPopup.open();
 });
 
-Promise.all([api.getUserData(),api.getInitialCards()])
-.then(([userData,initialCards]) => {
-  console.log(userData);
-  
-  const {name, about, avatar, _id } = userData;
-  userInfo.setUserInfo({ name, about, avatar });
-  userInfo.setUserId(_id);
+function createCard(item) {
+  const userId = userInfo.getUserId();
 
-  initialCards.forEach((card) => {
-    renderPlace(card, cardList);
+  const card = new Card(
+    item,
+    "#place__template",
+    { likePlace, dislikePlace, deletePlace: handleRemovePlace },
+    (link, name) => {
+      popupImg.open({ name, link });
+    },
+    userId
+  );
+
+  return card.createNewPlace();
+}
+
+Promise.all([api.getUserData(), api.getInitialCards()])
+  .then(([userData, initialCards]) => {
+    console.log(userData);
+
+    const { name, about, avatar, _id } = userData;
+    userInfo.setUserInfo({ name, about, avatar });
+    userInfo.setUserId(_id);
+
+    initialCards.forEach((card) => {
+      const cardElement = createCard(card);
+      cardList.addItem(cardElement, "append");
+    });
+
+    cardList.renderItems();
   })
-})
-.catch((err) => console.log(err))
+  .catch((err) => console.log(err));
  
 
 // WILL ERASE AFTER THE REVIEW
@@ -223,4 +243,22 @@ Promise.all([api.getUserData(),api.getInitialCards()])
 //     .catch((error) => {
 //       console.error("Error fetching user data:", error);
 //     });
+// }
+
+// function likePlace(card) {
+//   api
+//     .likePlace(card._id)
+//     .then((data) => {
+//       card.updateLikes(data.likes);
+//     })
+//     .catch(console.error);
+// }
+
+// function dislikePlace(card) {
+//   api
+//     .dislikePlace(card._id)
+//     .then((data) => {
+//       card.updateLikes(data.likes);
+//     })
+//     .catch(console.error);
 // }
